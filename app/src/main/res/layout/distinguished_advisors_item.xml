@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/area_counseling_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="89dp"
+        android:layout_height="106dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
@@ -33,7 +33,7 @@
         android:layout_marginTop="-24dp"
         android:gravity="center"
         android:drawableTop="@drawable/englishrequesticon"
-        android:text="ddddddddddddddd" />
+        android:text="" />
 
     <TextView
         android:id="@+id/area_counseling_catogory"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/area_counseling_name"
-        android:text="ddddddddddddddd"
+        android:text=""
         android:textColor="@color/colorBlue"
         android:textStyle="bold" />
 

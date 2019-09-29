@@ -54,7 +54,6 @@ public class Areas_Counseling_adapter  extends RecyclerView.Adapter<Areas_Counse
        Picasso.with(context)
               .load(areas_counseling_models.get(position).getArea_counseling_image())
                .error(R.drawable.asteshartnafsi)
-
                .into(holder.area_counseling_image);
 
         holder.area_counseling_catogory.setText(areas_counseling_models.get(position).getArea_counseling_catogory());

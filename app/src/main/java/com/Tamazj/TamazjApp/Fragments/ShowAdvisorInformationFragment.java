@@ -2,10 +2,8 @@ package com.Tamazj.TamazjApp.Fragments;
 
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +34,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +43,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -68,10 +68,13 @@ public class ShowAdvisorInformationFragment extends Fragment {
 
     SessionAdapterwithoutImage sessionAdapter;
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor_signUp;
-    String choosing_langauge;
-    String token;
+    String ADVISOR_ID, lang;
+    ProgressDialog progressDialog;
+
+
+    public String getURLForResource(int resourceId) {
+        return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId).toString();
+    }
 
     @SuppressLint("WrongConstant")
     @Override
@@ -79,7 +82,13 @@ public class ShowAdvisorInformationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_show_advisor_information, container, false);
-        sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
+        if (sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
+            lang = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
+        } else {
+            lang = Locale.getDefault().getLanguage();
+        }
 
         blueBack = view.findViewById(R.id.blueBack);
         blueBack.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +107,18 @@ public class ShowAdvisorInformationFragment extends Fragment {
         tvAdvisorAbout = view.findViewById(R.id.tvAdvisorAbout);
         tvAdvisorReviews = view.findViewById(R.id.tvAdvisorReviews);
 
+
+        final Bundle bundle = getArguments();
+        if (bundle != null && bundle.getString(AppConstants.ADVISOR_ID) != null) {
+            ADVISOR_ID = bundle.getString(AppConstants.ADVISOR_ID);
+            //Toast.makeText(getContext(), ""+ADVISOR_ID, Toast.LENGTH_SHORT).show();
+            getData(ADVISOR_ID);
+        } else {
+            Toast.makeText(getContext(), "" + getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+        }
+
+
         listShowAdvisorInf = new ArrayList<>();
-        listShowAdvisorInf.add(getString(R.string.family_consultane));
-        listShowAdvisorInf.add(getString(R.string.family_consultane));
-        listShowAdvisorInf.add(getString(R.string.family_consultane));
         textViewAdapter = new TextViewAdapter(getContext(), listShowAdvisorInf);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvShowAdvisorInf.setLayoutManager(layoutManager);
@@ -111,22 +128,8 @@ public class ShowAdvisorInformationFragment extends Fragment {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         SessionRecycler.setHasFixedSize(true);
         sessionAdapter = new SessionAdapterwithoutImage(getContext(),sessionlist);
-        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
-            if (sharedPreferences != null) {
-                if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {
-                    choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
-                    token = sharedPreferences.getString(AppConstants.token, "default value");
-
-                    getSessionTime(choosing_langauge, token);
-
-                }
-            }
-        } else {
-            Toast.makeText(getActivity(), "" + getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-        }
+        getSessionTime();
 
         aboutReviewsView = inf.inflate(R.layout.advisor_about_layout,null);
         tvAboutAdvisorText = aboutReviewsView.findViewById(R.id.tvAboutAdvisorText);
@@ -135,6 +138,9 @@ public class ShowAdvisorInformationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.ADVISOR_ID, ADVISOR_ID);
+                advisoeDeailsBottomDialog.setArguments(bundle);
                 advisoeDeailsBottomDialog.show(getFragmentManager(), advisoeDeailsBottomDialog.getTag());
 
             }
@@ -174,7 +180,7 @@ public class ShowAdvisorInformationFragment extends Fragment {
                 list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem),AppConstants.SATISFIED,getString(R.string.notificationText)));
                 list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem),AppConstants.NOT_SATISFIED,getString(R.string.notificationText)));
                 adapter = new ReviewAdapter(getContext(), list);
-                @SuppressLint("WrongConstant") RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                 rvBeneficiariesFeedback.setLayoutManager(layoutManager);
                 rvBeneficiariesFeedback.setAdapter(adapter);
 
@@ -187,12 +193,9 @@ public class ShowAdvisorInformationFragment extends Fragment {
     }
 
 
-    public String getURLForResource (int resourceId) {
-        return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
-    }
+    //----------------------------------------------------------------------------------------------
 
-
-    public void getSessionTime(final String lang, final String token) {
+    public void getSessionTime() {
 
         // showDialog();
 
@@ -246,8 +249,6 @@ public class ShowAdvisorInformationFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("lang", lang);
-                headers.put("Authorization", "Bearer" + "  " + token);
 
                 return headers;
 
@@ -265,6 +266,97 @@ public class ShowAdvisorInformationFragment extends Fragment {
         MyApplication.getInstance().addToRequestQueue(stringRequest);
 
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    private void getData(String ADVISOR_ID) {
+
+        showDialog();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.ADVISOR_CONSULTANT + ADVISOR_ID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Toast.makeText(getContext(), ""+AppConstants.ADVISOR_CONSULTANT+ADVISOR_ID, Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject js = new JSONObject(response);
+                    JSONObject jsonObject = js.getJSONObject("data");
+//                    for(int i=0;i<jsonArray.length();i++){
+                    try {
+                        //JSONObject jsonObject =  jsonArray.getJSONObject(i);
+                        String name = jsonObject.get("name").toString();
+                        tvAdvisorName.setText(name);
+                        String photo = jsonObject.get("photo").toString();
+                        Picasso.with(getContext()).load(photo).error(R.drawable.image).resize(96, 96).into(profileImage);
+                        String rating = jsonObject.get("rating").toString() + "%";
+                        tvRatePercent.setText(rating);
+                        JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
+                        for (int j = 0; j < jsonArrayCategory.length(); j++) {
+                            try {
+                                JSONObject jsonObject2 = jsonArrayCategory.getJSONObject(j);
+                                String category;
+                                if (lang.equals("ar"))
+                                    category = jsonObject2.get("name_ar").toString();
+                                else category = jsonObject2.get("name_en").toString();
+                                listShowAdvisorInf.add(category);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e("WAFAA", e.toString());
+                    hideDialog();
+                }
+
+
+                //}
+                Log.e("WAFAA", response.toString());
+
+                textViewAdapter.notifyDataSetChanged();
+                hideDialog();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideDialog();
+                Toast.makeText(getContext(), getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+                Log.e("WAFAA", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap();
+                map.put("lang", lang);
+                return map;
+
+            }
+        };
+
+        MyApplication.getInstance().addToRequestQueue(stringRequest);
+
+
+    }
+
+    public void showDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.load_login));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void hideDialog() {
+
+        if (progressDialog.isShowing()) progressDialog.dismiss();
+    }
+
+    //----------------------------------------------------------------------------------------------
 
 
 }

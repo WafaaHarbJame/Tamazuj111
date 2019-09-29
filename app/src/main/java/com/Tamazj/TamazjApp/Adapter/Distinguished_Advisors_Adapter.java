@@ -1,6 +1,7 @@
 package com.Tamazj.TamazjApp.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tamazj.TamazjApp.Fragments.ShowAdvisorInformationFragment;
+import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
 import com.Tamazj.TamazjApp.Model.Distinguished_Advisors_Model;
 import com.Tamazj.TamazjApp.R;
@@ -52,14 +55,18 @@ public class Distinguished_Advisors_Adapter  extends RecyclerView.Adapter<Distin
     public void onBindViewHolder(@NonNull final Distinguished_Advisors_Adapter.MyHolder holder, final int position) {
         Picasso.with(context)
                 .load(distinguished_advisors_models.get(position).getArea_counseling_image())
-                .error(R.drawable.image)
+                .error(R.drawable.image).resize(90, 100)
                 .into(holder.area_counseling_image);
         holder.area_counseling_catogory.setText(distinguished_advisors_models.get(position).getArea_counseling_catogory());
         holder.area_counseling_name.setText(distinguished_advisors_models.get(position).getArea_counseling_name());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new ShowAdvisorInformationFragment(), "HomeFragment").commit();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.ADVISOR_ID, distinguished_advisors_models.get(position).getId());
+                Fragment fragment = new ShowAdvisorInformationFragment();
+                fragment.setArguments(bundle);
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
 
             }
         });
