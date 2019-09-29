@@ -144,6 +144,7 @@ public class UserProfileFragment extends Fragment {
 
      // showDialog();
 
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.USER_PROFILE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
