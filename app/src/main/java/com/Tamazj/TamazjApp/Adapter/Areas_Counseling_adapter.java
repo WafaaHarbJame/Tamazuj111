@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class Areas_Counseling_adapter  extends RecyclerView.Adapter<Areas_Counseling_adapter.MyHolder>{
+public class Areas_Counseling_adapter extends RecyclerView.Adapter<Areas_Counseling_adapter.MyHolder>{
 
     private List<Areas_Counseling_Model> areas_counseling_models;
     private Context context;
@@ -29,7 +29,7 @@ public class Areas_Counseling_adapter  extends RecyclerView.Adapter<Areas_Counse
     int pos;
 
     interface IClickListener{
-        void onItemClick(int position,List<Areas_Counseling_Model> areas_counseling_models, View enable);
+        void onItemClick(int position, List<Areas_Counseling_Model> areas_counseling_models, View enable);
     }
 
     IClickListener iClickListener;
@@ -54,6 +54,7 @@ public class Areas_Counseling_adapter  extends RecyclerView.Adapter<Areas_Counse
        Picasso.with(context)
               .load(areas_counseling_models.get(position).getArea_counseling_image())
                .error(R.drawable.asteshartnafsi)
+
                .into(holder.area_counseling_image);
 
         holder.area_counseling_catogory.setText(areas_counseling_models.get(position).getArea_counseling_catogory());
@@ -62,6 +63,8 @@ public class Areas_Counseling_adapter  extends RecyclerView.Adapter<Areas_Counse
             public void onClick(View v) {
                 Bundle bundle=new Bundle();
                 bundle.putString(AppConstants.toolbartiltle, areas_counseling_models.get(position).getArea_counseling_catogory());
+                bundle.putString(AppConstants.CATEGORY_ID, areas_counseling_models.get(position).getId());
+                //Toast.makeText(context, ""+ areas_counseling_models.get(position).getId(), Toast.LENGTH_SHORT).show();
                 CategoriesdetailsFragment categoriesdetailsFragment=new CategoriesdetailsFragment();
                 categoriesdetailsFragment.setArguments(bundle);
                 ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, categoriesdetailsFragment, "HomeFragment").commit();
