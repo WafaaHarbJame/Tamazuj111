@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {
                 choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
                 if (choosing_langauge.matches("ar")) {
+                    
 
                     Locale arabic = new Locale("ar", "ar");
                     config.locale = arabic;
