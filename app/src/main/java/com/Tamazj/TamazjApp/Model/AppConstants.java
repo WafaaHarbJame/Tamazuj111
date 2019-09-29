@@ -44,5 +44,6 @@ public interface AppConstants {
     String ADVISOR_CONSULTANT = "http://salahalimohamed.website/tmajog/api/v1/consultants/";
     String CATEGORIES = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations";
     String CATEGORY = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations/";
+    String user_consultation = "http://salahalimohamed.website/tmajog/api/v1/user/consultation";
     //----------------------------------------------------------------------------------------------
 }
