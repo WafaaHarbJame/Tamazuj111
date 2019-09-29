@@ -17,16 +17,19 @@ public interface AppConstants {
     String THIRD_SESSION = "THIRD_SESSION";
     String SPECIAL_SESSION = "SPECIAL_SESSION";
     String toolbartiltle = "toolbartiltle";
+    String ACTIVE = "الحساب  مفعل ";
+    String NOT_ACTIVE = "الحساب غير مفعل";
+    String ADVISOR_ID = "ADVISOR_ID";
+    String CATEGORY_ID = "CATEGORY_ID";
+
+
+    //-----------------------------APIs-------------------------------------------------------------
+
     String USER_REGISTER = "http://salahalimohamed.website/tmajog/api/v1/user/register";
     String ISLOGIN = "ISLOGIN";
     String USER_LOGIN = "http://salahalimohamed.website/tmajog/api/v1/user/login";
     String activateCode = "http://salahalimohamed.website/tmajog/api/v1/user/activateCode";
     String token = "token";
-    String ACTIVE = "الحساب  مفعل ";
-    String NOT_ACTIVE = "الحساب غير مفعل";
-    String ADVISOR_ID = "ADVISOR_ID";
-    //-----------------------------APIs-------------------------------------------------------------
-
     String USER_LOGOUT = "http://salahalimohamed.website/tmajog/api/v1/user/logout";
     String resetPass ="http://salahalimohamed.website/tmajog/api/v1/user/resetPass" ;
     String USER_PROFILE="http://salahalimohamed.website/tmajog/api/v1/user/profile";
@@ -37,9 +40,9 @@ public interface AppConstants {
     String FCM_TOKEN ="FCM_TOKEN" ;
     String LANG_choose ="LANG_choose" ;
     String updatePassword ="http://salahalimohamed.website/tmajog/api/v1/user/updatePassword";
-    String user_consultation = "http://salahalimohamed.website/tmajog/api/v1/user/consultation";
     String ADVISORS_CONSULTANTS = "http://salahalimohamed.website/tmajog/api/v1/consultants";
     String ADVISOR_CONSULTANT = "http://salahalimohamed.website/tmajog/api/v1/consultants/";
     String CATEGORIES = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations";
-
+    String CATEGORY = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations/";
+    //----------------------------------------------------------------------------------------------
 }

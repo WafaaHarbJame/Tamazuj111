@@ -6,6 +6,7 @@ public class Categories {
     private  String profile_name;
     private String profile_dsc;
     private  String catoroytype;
+    private String id;
 
     public Categories(String percent, String profileimage, String profile_name, String profile_dsc, String catoroytype) {
         this.percent = percent;
@@ -13,6 +14,23 @@ public class Categories {
         this.profile_name = profile_name;
         this.profile_dsc = profile_dsc;
         this.catoroytype = catoroytype;
+    }
+
+    public Categories(String percent, String profileimage, String profile_name, String profile_dsc, String catoroytype, String id) {
+        this.percent = percent;
+        this.profileimage = profileimage;
+        this.profile_name = profile_name;
+        this.profile_dsc = profile_dsc;
+        this.catoroytype = catoroytype;
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getPercent() {
