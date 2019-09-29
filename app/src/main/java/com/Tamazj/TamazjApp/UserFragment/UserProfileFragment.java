@@ -78,8 +78,10 @@ public class UserProfileFragment extends Fragment {
             }
         });
         sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
+
         if (sharedPreferences != null) {
             token = sharedPreferences.getString(AppConstants.token, "default value");
+            Toast.makeText(getActivity(), "" + token, Toast.LENGTH_SHORT).show();
             ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 

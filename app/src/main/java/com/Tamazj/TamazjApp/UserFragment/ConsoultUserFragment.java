@@ -94,6 +94,7 @@ public class ConsoultUserFragment extends Fragment {
                 if (sharedPreferences != null) {
                     if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {
                         choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
+                        Toast.makeText(getContext(), "" + token, Toast.LENGTH_SHORT).show();
 
                         getUserConsultation(choosing_langauge, token);
                     }
@@ -135,9 +136,9 @@ public class ConsoultUserFragment extends Fragment {
             public void onResponse(String response) {
 
                 try {
-                    JSONObject session_response = new JSONObject(response);
-                    JSONArray jsonArray = session_response.getJSONArray("data");
-                    Log.e("jsonArray", String.valueOf(jsonArray));
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    Log.e("response", response);
 
                     for (int i = 0; i < jsonArray.length(); i++) {
 
