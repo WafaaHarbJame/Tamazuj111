@@ -17,7 +17,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.Tamazj.TamazjApp.Api.MyApplication;
-import com.Tamazj.TamazjApp.MainActivity;
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.R;
 import com.android.volley.AuthFailureError;
@@ -54,7 +53,7 @@ public class ResetCodeActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ResetCodeActivity.this, MainActivity.class);
+                Intent intent = new Intent(ResetCodeActivity.this, SignInActivity.class);
                 startActivity(intent);
                 finish();
             }
