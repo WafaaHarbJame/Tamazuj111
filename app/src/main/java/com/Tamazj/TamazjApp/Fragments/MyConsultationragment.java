@@ -111,6 +111,19 @@ public class MyConsultationragment extends Fragment {
 
         fillList();
 
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
+//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
+//
 
         distinguished_advisors_adapter = new Distinguished_Advisors_Adapter(getContext(),distinguished_advisors_models);
         mDistinguishedAdvisors.setAdapter(distinguished_advisors_adapter);
@@ -123,7 +136,7 @@ public class MyConsultationragment extends Fragment {
 
     private void fillList() {
 
-        showDialog();
+            showDialog();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.ADVISORS_CONSULTANTS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -140,20 +153,20 @@ public class MyConsultationragment extends Fragment {
                             JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
                             String category = "";
 //                            for(int j=0;j<jsonArray.length();j++){
-                            try {
-                                JSONObject jsonObject2 = jsonArrayCategory.getJSONObject(0);
-                                if (lang.equals("ar"))
-                                    category = jsonObject2.get("name_ar").toString();
-                                else category = jsonObject2.get("name_en").toString();
-                                // Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            //  }
-                            //    Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
+                                try {
+                                    JSONObject jsonObject2 =  jsonArrayCategory.getJSONObject(0);
+                                    if(lang.equals("ar"))
+                                        category =jsonObject2.get("name_ar").toString();
+                                    else category =jsonObject2.get("name_en").toString();
+                                    Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                          //  }
+                            Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
                             if(status.matches(AppConstants.ACTIVE)) {
                                 distinguished_advisors_models.add(new Distinguished_Advisors_Model(photo, name, category, id));
-                                //Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -175,32 +188,34 @@ public class MyConsultationragment extends Fragment {
                 }
 
 
-                //}
-                Log.e("WAFAA", response.toString());
 
 
-                hideDialog();
+ //}
+                    Log.e("WAFAA", response.toString());
 
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideDialog();
-                Toast.makeText(getContext(), getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
-                Log.e("WAFAA", error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap();
-                map.put("lang", lang);
-                return map;
+                    hideDialog();
 
-            }
-        };
 
-        MyApplication.getInstance().addToRequestQueue(stringRequest);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    hideDialog();
+                    Toast.makeText(getContext(), getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+                    Log.e("WAFAA", error.toString());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap();
+                    map.put("lang", lang);
+                    return map;
+
+                }
+            };
+
+            MyApplication.getInstance().addToRequestQueue(stringRequest);
 
 
 

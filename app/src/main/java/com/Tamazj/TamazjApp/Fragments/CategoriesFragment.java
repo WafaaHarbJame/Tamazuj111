@@ -48,11 +48,12 @@ import static android.content.Context.MODE_PRIVATE;
 public class CategoriesFragment extends Fragment {
     View view;
     private RecyclerView mAreasCounseling;
-    GridLayoutManager mAreasCounselingmanager;
-    List<Areas_Counseling_Model> areas_counseling_models = new ArrayList<>();
+    GridLayoutManager mAreasCounselingmanager ;
+    List<Areas_Counseling_Model> areas_counseling_models=new ArrayList<>();
     Areas_Counseling_adapter areas_counseling_adapter;
     ImageView personalprofile;
     String lang;
+
 
 
     public CategoriesFragment() {
@@ -62,11 +63,11 @@ public class CategoriesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_categories, container, false);
+                view=inflater.inflate(R.layout.fragment_categories, container, false);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
-        if (sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
-            lang = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null){
+            lang = sharedPreferences.getString(AppConstants.LANG_choose,Locale.getDefault().getLanguage());
         } else {
             lang = Locale.getDefault().getLanguage();
         }
@@ -74,16 +75,29 @@ public class CategoriesFragment extends Fragment {
 
         mAreasCounseling = view.findViewById(R.id.Areas_Counseling);
 
-        mAreasCounselingmanager = new GridLayoutManager(getContext(), 3);
+        mAreasCounselingmanager = new GridLayoutManager(getContext(),3);
         mAreasCounseling.setLayoutManager(mAreasCounselingmanager);
         mAreasCounseling.setHasFixedSize(true);
 
         fillList();
 
-        areas_counseling_adapter = new Areas_Counseling_adapter(getContext(), areas_counseling_models);
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات أسرية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات نفسية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","السمو بالنفس "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات أسرية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات نفسية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","السمو بالنفس "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات أسرية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات نفسية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","السمو بالنفس "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات أسرية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","استشارات نفسية "));
+//        areas_counseling_models.add(new Areas_Counseling_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","السمو بالنفس "));
+//
+        areas_counseling_adapter=new Areas_Counseling_adapter(getContext(),areas_counseling_models);
         mAreasCounseling.setAdapter(areas_counseling_adapter);
 
-        personalprofile = view.findViewById(R.id.personalprofile);
+        personalprofile=view.findViewById(R.id.personalprofile);
         personalprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,14 +125,15 @@ public class CategoriesFragment extends Fragment {
                 try {
                     JSONObject r = new JSONObject(response);
                     JSONArray jsonArray = r.getJSONArray("data");
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for(int i=0;i<jsonArray.length();i++){
                         try {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            String id = jsonObject.get("id").toString();
+                            JSONObject jsonObject =  jsonArray.getJSONObject(i);
+                            String id =jsonObject.get("id").toString();
                             String category = "";
-                            if (lang.equals("ar")) category = jsonObject.get("name_ar").toString();
-                            else category = jsonObject.get("name_en").toString();
-                            // Toast.makeText(getContext(), "" + category, Toast.LENGTH_SHORT).show();
+                            if(lang.equals("ar"))
+                                category =jsonObject.get("name_ar").toString();
+                            else category =jsonObject.get("name_en").toString();
+                            //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
                             String image = jsonObject.get("image").toString();
 
 //                            JSONArray jsonArraySubCategory = jsonObject.getJSONArray("sup_category");
@@ -149,11 +164,13 @@ public class CategoriesFragment extends Fragment {
 //
 //
 //                    }
-                } catch (JSONException e) {
+                }catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("WAFAA", e.toString());
                     hideDialog();
                 }
+
+
 
 
                 //}
@@ -184,6 +201,7 @@ public class CategoriesFragment extends Fragment {
         MyApplication.getInstance().addToRequestQueue(stringRequest);
 
 
+
     }
 
     //----------------------------------------------------------------------------------------------
@@ -201,4 +219,8 @@ public class CategoriesFragment extends Fragment {
 
         if (progressDialog.isShowing()) progressDialog.dismiss();
     }
+
+    //----------------------------------------------------------------------------------------------
+
+
 }

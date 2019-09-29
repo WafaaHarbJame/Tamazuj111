@@ -69,14 +69,8 @@ public class ShowAdvisorInformationFragment extends Fragment {
     SessionAdapterwithoutImage sessionAdapter;
 
     String ADVISOR_ID, lang;
-    ProgressDialog progressDialog;
 
 
-    public String getURLForResource(int resourceId) {
-        return Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId).toString();
-    }
-
-    @SuppressLint("WrongConstant")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,8 +78,8 @@ public class ShowAdvisorInformationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_show_advisor_information, container, false);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
-        if (sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
-            lang = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose,Locale.getDefault().getLanguage()) != null){
+            lang = sharedPreferences.getString(AppConstants.LANG_choose,Locale.getDefault().getLanguage());
         } else {
             lang = Locale.getDefault().getLanguage();
         }
@@ -109,16 +103,19 @@ public class ShowAdvisorInformationFragment extends Fragment {
 
 
         final Bundle bundle = getArguments();
-        if (bundle != null && bundle.getString(AppConstants.ADVISOR_ID) != null) {
+        if( bundle != null && bundle.getString(AppConstants.ADVISOR_ID)!= null){
             ADVISOR_ID = bundle.getString(AppConstants.ADVISOR_ID);
             //Toast.makeText(getContext(), ""+ADVISOR_ID, Toast.LENGTH_SHORT).show();
             getData(ADVISOR_ID);
         } else {
-            Toast.makeText(getContext(), "" + getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), ""+getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
         }
 
 
         listShowAdvisorInf = new ArrayList<>();
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
         textViewAdapter = new TextViewAdapter(getContext(), listShowAdvisorInf);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvShowAdvisorInf.setLayoutManager(layoutManager);
@@ -176,11 +173,11 @@ public class ShowAdvisorInformationFragment extends Fragment {
                 rvBeneficiariesFeedback = aboutReviewsView.findViewById(R.id.rvBeneficiariesFeedback);
 
                 list = new ArrayList<>();
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem),AppConstants.HAPPY,getString(R.string.notificationText)));
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem),AppConstants.SATISFIED,getString(R.string.notificationText)));
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem),AppConstants.NOT_SATISFIED,getString(R.string.notificationText)));
+                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.HAPPY,getString(R.string.notificationText)));
+                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.SATISFIED,getString(R.string.notificationText)));
+                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.NOT_SATISFIED,getString(R.string.notificationText)));
                 adapter = new ReviewAdapter(getContext(), list);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
                 rvBeneficiariesFeedback.setLayoutManager(layoutManager);
                 rvBeneficiariesFeedback.setAdapter(adapter);
 
@@ -193,7 +190,10 @@ public class ShowAdvisorInformationFragment extends Fragment {
     }
 
 
-    //----------------------------------------------------------------------------------------------
+    public String getURLForResource (int resourceId) {
+        return Uri.parse("android.resource://"+ R.class.getPackage().getName()+"/" +resourceId).toString();
+    }
+
 
     public void getSessionTime() {
 
@@ -267,12 +267,13 @@ public class ShowAdvisorInformationFragment extends Fragment {
 
     }
 
+
     //----------------------------------------------------------------------------------------------
 
     private void getData(String ADVISOR_ID) {
 
         showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.ADVISOR_CONSULTANT + ADVISOR_ID, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.ADVISOR_CONSULTANT+ADVISOR_ID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //Toast.makeText(getContext(), ""+AppConstants.ADVISOR_CONSULTANT+ADVISOR_ID, Toast.LENGTH_SHORT).show();
@@ -280,38 +281,43 @@ public class ShowAdvisorInformationFragment extends Fragment {
                     JSONObject js = new JSONObject(response);
                     JSONObject jsonObject = js.getJSONObject("data");
 //                    for(int i=0;i<jsonArray.length();i++){
-                    try {
-                        //JSONObject jsonObject =  jsonArray.getJSONObject(i);
-                        String name = jsonObject.get("name").toString();
-                        tvAdvisorName.setText(name);
-                        String photo = jsonObject.get("photo").toString();
-                        Picasso.with(getContext()).load(photo).error(R.drawable.image).resize(96, 96).into(profileImage);
-                        String rating = jsonObject.get("rating").toString() + "%";
-                        tvRatePercent.setText(rating);
-                        JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
-                        for (int j = 0; j < jsonArrayCategory.length(); j++) {
+                        try {
+                            //JSONObject jsonObject =  jsonArray.getJSONObject(i);
+                            String name =jsonObject.get("name").toString();
+                            tvAdvisorName.setText(name);
+                            String photo = jsonObject.get("photo").toString();
+                            Picasso.with(getContext())
+                                    .load(photo)
+                                    .error(R.drawable.image)
+                                    .into(profileImage);
+                            String rating = jsonObject.get("rating").toString()+"%";
+                            tvRatePercent.setText(rating);
+                            JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
+                            for(int j=0;j<jsonArrayCategory.length();j++){
                             try {
-                                JSONObject jsonObject2 = jsonArrayCategory.getJSONObject(j);
+                                JSONObject jsonObject2 =  jsonArrayCategory.getJSONObject(j);
                                 String category;
-                                if (lang.equals("ar"))
-                                    category = jsonObject2.get("name_ar").toString();
-                                else category = jsonObject2.get("name_en").toString();
+                                if(lang.equals("ar"))
+                                    category =jsonObject2.get("name_ar").toString();
+                                else category =jsonObject2.get("name_en").toString();
                                 listShowAdvisorInf.add(category);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                              }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                   // }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    // }
-
-                } catch (JSONException e) {
+                }catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("WAFAA", e.toString());
                     hideDialog();
                 }
+
+
 
 
                 //}
@@ -330,19 +336,24 @@ public class ShowAdvisorInformationFragment extends Fragment {
                 Log.e("WAFAA", error.toString());
             }
         }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap();
-                map.put("lang", lang);
-                return map;
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map = new HashMap();
+                    map.put("lang", lang);
+                    return map;
 
-            }
+                }
         };
 
         MyApplication.getInstance().addToRequestQueue(stringRequest);
 
 
+
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    ProgressDialog progressDialog;
 
     public void showDialog() {
         progressDialog = new ProgressDialog(getContext());
