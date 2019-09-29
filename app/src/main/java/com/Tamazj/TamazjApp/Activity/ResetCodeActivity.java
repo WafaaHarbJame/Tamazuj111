@@ -53,7 +53,7 @@ public class ResetCodeActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ResetCodeActivity.this, SignInActivity.class);
+                Intent intent = new Intent(ResetCodeActivity.this, ActivateCodeActivity.class);
                 startActivity(intent);
                 finish();
             }
