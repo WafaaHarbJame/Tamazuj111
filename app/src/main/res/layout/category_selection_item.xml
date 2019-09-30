@@ -24,13 +24,15 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/area_counseling_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_margin="@dimen/activity_horizontal_margin_medium"
             android:src="@drawable/asteshartosari"
             android:padding="@dimen/activity_horizontal_margin_xlarge"
+            app:civ_border_color="@color/colorBlue"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
