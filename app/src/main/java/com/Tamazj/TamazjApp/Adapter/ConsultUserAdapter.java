@@ -34,7 +34,6 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
         this.consults = consults;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        //this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -53,21 +52,25 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
         this.holder = holder;
-        if (!(consults.isEmpty())) {
             holder.name.setText(consults.get(position).getConsultant_id().getName());
-            holder.consultStatusScheduled.setText(consults.get(position).getStatus());
+        holder.consultStatusFinished.setText(consults.get(position).getStatus());
             holder.time.setText(consults.get(position).getSession_time().getTime());
-            if (lang.matches("ar")) {
-                holder.type.setText(consults.get(position).getCategory_id().getName_ar());
+           /* if (lang.matches("ar")) {
+                if(consults.get(position).getCategory_id().getName_ar()!=null) {
+                    holder.type.setText(consults.get(position).getCategory_id().getName_ar());
+                }
 
-            } else {
+            } else  if(consults.get(position).getCategory_id().getName_en()!=null){
+
                 holder.type.setText(consults.get(position).getCategory_id().getName_en());
 
-            }
+            }*/
 
 
-            Picasso.with(context).load(consults.get(position).getConsultant_id().getPhoto()).error(R.drawable.image).resize(90, 100).into(holder.img);
-        }
+        Picasso.with(context).
+                load(consults.get(position).getConsultant_id().getPhoto()).
+                error(R.drawable.image).resize(90, 100).into(holder.img);
+
     }
 
     public String getURLForResource(int resourceId) {

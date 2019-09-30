@@ -58,14 +58,16 @@ public class ConsoultUserFragment extends Fragment {
     SharedPreferences sharedPreferences;
     ProgressDialog progressDialog;
     String token;
+    LinearLayoutManager linearLayoutManager;
     String fcm_token;
 
 
+    @SuppressLint("WrongConstant")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_consoult_advisor, container, false);
-        blueBack = view.findViewById(R.id.blueBack);
+        view = inflater.inflate(R.layout.fragment_consoult_user, container, false);
+        blueBack = view.findViewById(R.id.backbutton);
 
         blueBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,55 +75,36 @@ public class ConsoultUserFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new HomeFragment(), "HomeFragment").commit();
             }
         });
+        recyclerView = view.findViewById(R.id.rvUserConsult);
+        consultApplications = new ArrayList<>();
 
 
         sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
         token = sharedPreferences.getString(AppConstants.token, "default value");
         fcm_token = sharedPreferences.getString(AppConstants.FCM_TOKEN, "default value");
         choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
-
-
         progressDialog = new ProgressDialog(getActivity());
 
         if (sharedPreferences != null) {
             token = sharedPreferences.getString(AppConstants.token, "default value");
             fcm_token = sharedPreferences.getString(AppConstants.FCM_TOKEN, "default value");
-            choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
-            recyclerView = view.findViewById(R.id.rvAdvisorConsult);
-            @SuppressLint("WrongConstant") RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            recyclerView.setLayoutManager(layoutManager);
-
-            consultApplications = new ArrayList<>();
-
-            adapter = new ConsultUserAdapter(getContext(), consultApplications);
-
-
-
-            ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
-
-            if (networkInfo != null && networkInfo.isConnected()) {
-
-                if (sharedPreferences != null) {
-                    if (sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
-                        choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
-
-                        //  getUserConsultation(choosing_langauge, "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM2OTMxZDNkM2U3ZTViYzEwZDg0NDhmNDBlODQ3NTBmYWRmNGI5MTNmODA5NGQ2NmM1ZjhlMDAwYjdmYzgxM2MwODNmZDdjNGRhMjk4MzczIn0.eyJhdWQiOiIxIiwianRpIjoiYzY5MzFkM2QzZTdlNWJjMTBkODQ0OGY0MGU4NDc1MGZhZGY0YjkxM2Y4MDk0ZDY2YzVmOGUwMDBiN2ZjODEzYzA4M2ZkN2M0ZGEyOTgzNzMiLCJpYXQiOjE1Njc5OTE0NDcsIm5iZiI6MTU2Nzk5MTQ0NywiZXhwIjoxNTk5NjEzODQ3LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.Tfw3ex_BnGdr26Vr4U9X2jcsBa2kKddf8xf-Go0kALnQn1PJpqJuXoxou9WjRtODtRUDvwPoW3U4vn0EpTzZVU6udBxi9J7MaiDqKL3QTlt1OHLoby9T8pSoHMl0PMTlfg28mSthoAf8O0jijaO4Nb1_btKzcTS5-dro2g_jATTmw_RuVQGsG1nXgHvUm6H3hlQyA8WNA17OraOUzOk8oadTXDcT5X7aO5avk8skxLH_rA9-4FfgyzVY_HGSxFmbva3LJ0KCVkXWt9IbkdssBd2L3f0kkc8UkuC3tL5SioG_IjaO1lkmdL6bR_LdD9gELe1V9u1aJR6wab3LjrEh1zcXVaiJfEUVwJuMNs3PQ6-BaUVbcKQTo98MtrgmnoUGNCkBcFqINPIBxiVo3EfK_pajuHpQx6X83Gp4XakXqG6lu4hyPRWyEUvJXeJPM6t3ElAs6jffbnOz9p3sD53NtCpbKeC4v7LVcwxfGTYY4cjei0ShJyhsxPT05Lx6JZ564Rm4QTRsMaSwr262y1X6pe0vMGBk4TcA5FZ5IbbzD3-pmxE9H-INiLf2kpMX93WH6cd1vei16mvjcO8IGyR3bI2_omKPHmRD3qxAYxavMlpStVR7UAA35zBuS5eVqIJne4xP6f0Ekl9q9doIhBhz9LgmuCJ1_jyoXOgZsYSgDbU");
-                        getUserConsultation(choosing_langauge, token);
-
-                    }
-
-                }
-
-
-            } else {
-                Toast.makeText(getActivity(), "" + getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
-            }
-
-
-
-
+            choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
         }
+
+        ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            //  getUserConsultation(choosing_langauge, "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM2OTMxZDNkM2U3ZTViYzEwZDg0NDhmNDBlODQ3NTBmYWRmNGI5MTNmODA5NGQ2NmM1ZjhlMDAwYjdmYzgxM2MwODNmZDdjNGRhMjk4MzczIn0.eyJhdWQiOiIxIiwianRpIjoiYzY5MzFkM2QzZTdlNWJjMTBkODQ0OGY0MGU4NDc1MGZhZGY0YjkxM2Y4MDk0ZDY2YzVmOGUwMDBiN2ZjODEzYzA4M2ZkN2M0ZGEyOTgzNzMiLCJpYXQiOjE1Njc5OTE0NDcsIm5iZiI6MTU2Nzk5MTQ0NywiZXhwIjoxNTk5NjEzODQ3LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.Tfw3ex_BnGdr26Vr4U9X2jcsBa2kKddf8xf-Go0kALnQn1PJpqJuXoxou9WjRtODtRUDvwPoW3U4vn0EpTzZVU6udBxi9J7MaiDqKL3QTlt1OHLoby9T8pSoHMl0PMTlfg28mSthoAf8O0jijaO4Nb1_btKzcTS5-dro2g_jATTmw_RuVQGsG1nXgHvUm6H3hlQyA8WNA17OraOUzOk8oadTXDcT5X7aO5avk8skxLH_rA9-4FfgyzVY_HGSxFmbva3LJ0KCVkXWt9IbkdssBd2L3f0kkc8UkuC3tL5SioG_IjaO1lkmdL6bR_LdD9gELe1V9u1aJR6wab3LjrEh1zcXVaiJfEUVwJuMNs3PQ6-BaUVbcKQTo98MtrgmnoUGNCkBcFqINPIBxiVo3EfK_pajuHpQx6X83Gp4XakXqG6lu4hyPRWyEUvJXeJPM6t3ElAs6jffbnOz9p3sD53NtCpbKeC4v7LVcwxfGTYY4cjei0ShJyhsxPT05Lx6JZ564Rm4QTRsMaSwr262y1X6pe0vMGBk4TcA5FZ5IbbzD3-pmxE9H-INiLf2kpMX93WH6cd1vei16mvjcO8IGyR3bI2_omKPHmRD3qxAYxavMlpStVR7UAA35zBuS5eVqIJne4xP6f0Ekl9q9doIhBhz9LgmuCJ1_jyoXOgZsYSgDbU");
+            getUserConsultation(choosing_langauge, token);
+            getUserConsulatant(choosing_langauge, token);
+
+
+        } else {
+            Toast.makeText(getActivity(), "" + getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+        }
+
 
         return view;
 
@@ -137,7 +120,7 @@ public class ConsoultUserFragment extends Fragment {
             public void onResponse(JSONObject response) {
 
 
-                Log.e("WAFAAUPDATE", String.valueOf(response));
+                Log.e("WAFAAUPDATEresponse", String.valueOf(response));
 
                 try {
 
@@ -192,7 +175,7 @@ public class ConsoultUserFragment extends Fragment {
 
 
     public void getUserConsultation(final String lang, final String token) {
-        showDialog();
+        // showDialog();
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppConstants.user_consultation, new Response.Listener<String>() {
@@ -202,25 +185,26 @@ public class ConsoultUserFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    //Log.e("response", response);
+                    Log.e("response", response);
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         String arabic_catogoryname = "", english_catogoryname = "";
-
                         int id = jsonArray.getJSONObject(i).getInt("id");
                         String status = jsonArray.getJSONObject(i).getString("status");
                         Toast.makeText(getActivity(), "" + status, Toast.LENGTH_SHORT).show();
                         JSONObject session = jsonArray.getJSONObject(i).getJSONObject("session_time");
                         String time = session.getString("time");
+                        Toast.makeText(getActivity(), "" + time, Toast.LENGTH_SHORT).show();
                         JSONObject catogory = jsonArray.getJSONObject(i).getJSONObject("category_id");
                         JSONObject consultant_data = jsonArray.getJSONObject(i).getJSONObject("consultant_id");
                         String consultant_name = consultant_data.getString("name");
                         String photo = consultant_data.getString("photo");
+                        Toast.makeText(getActivity(), "" + photo, Toast.LENGTH_SHORT).show();
                         int consultant_id = consultant_data.getInt("id");
                         if (lang.equals("ar")) {
                             arabic_catogoryname = catogory.getString("name_ar");
                         } else {
-                            english_catogoryname = jsonObject.get("name_en").toString();
+                            english_catogoryname = catogory.getString("name_en");
                         }
 
                         Consults.DataBean consults = new Consults.DataBean();
@@ -229,7 +213,6 @@ public class ConsoultUserFragment extends Fragment {
                         Consults.DataBean.CategoryIdBean categoryIdBean = new Consults.DataBean.CategoryIdBean();
                         categoryIdBean.setName_ar(arabic_catogoryname);
                         categoryIdBean.setName_en(english_catogoryname);
-
                         consultantIdBean.setName(consultant_name);
                         sessionTimeBean.setTime(time);
                         consults.setStatus(status);
@@ -239,19 +222,21 @@ public class ConsoultUserFragment extends Fragment {
                         consultApplications.add(consults);
 
                     }
-
+                    linearLayoutManager = new LinearLayoutManager(getContext());
+                    linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setHasFixedSize(true);
+                    adapter = new ConsultUserAdapter(getContext(), consultApplications);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    adapter.notifyDataSetChanged();
 
 
-
-                    hideDialog();
+                    //hideDialog();
 
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
-                    hideDialog();
+                    // hideDialog();
 
                 }
 
@@ -260,7 +245,7 @@ public class ConsoultUserFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hideDialog();
+                // hideDialog();
 
 
             }
