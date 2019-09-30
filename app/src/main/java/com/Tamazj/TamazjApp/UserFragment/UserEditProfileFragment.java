@@ -130,7 +130,7 @@ public class UserEditProfileFragment extends Fragment implements IPickResult {
     String fcm_token;
     int country_id;
     String choosing_langauge;
-    
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
