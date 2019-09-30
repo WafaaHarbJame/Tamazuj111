@@ -130,12 +130,7 @@ public class UserEditProfileFragment extends Fragment implements IPickResult {
     String fcm_token;
     int country_id;
     String choosing_langauge;
-
-
-
-
-
-
+    
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -604,8 +599,7 @@ fullName.setOnClickListener(new View.OnClickListener() {
                 NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    if(updateusersocialstayus ||updateuserdate||updateusereducation||updateuseremmail||
-                            updateuserfulname||updateuserphone||updateusergender||updateuserimage || updateuserworkstayus) {
+                    if(updateusersocialstayus ||updateuserdate||updateusereducation||updateuseremmail|| updateuserfulname || updateuserphone || updateusergender || updateuserimage || updateuserworkstayus || updateusernationality) {
 
                         if (sharedPreferences != null) {
                             if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {
