@@ -186,6 +186,7 @@ public class ConsoultUserFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
+
                     Log.e("response", response);
 
                     for (int i = 0; i < jsonArray.length(); i++) {
