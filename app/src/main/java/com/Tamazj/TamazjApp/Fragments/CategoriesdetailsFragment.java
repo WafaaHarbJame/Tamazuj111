@@ -110,6 +110,7 @@ public class CategoriesdetailsFragment extends Fragment {
             }
         });
 
+        
         final Bundle bundle = getArguments();
         if( bundle != null && bundle.getString(AppConstants.CATEGORY_ID)!= null){
            ID = bundle.getString(AppConstants.CATEGORY_ID);
