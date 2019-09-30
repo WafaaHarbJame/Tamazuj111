@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +19,8 @@ import com.Tamazj.TamazjApp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Areas_Counseling_adapter extends RecyclerView.Adapter<Areas_Counseling_adapter.MyHolder>{
 
@@ -82,7 +83,7 @@ public class Areas_Counseling_adapter extends RecyclerView.Adapter<Areas_Counsel
 
     class MyHolder extends RecyclerView.ViewHolder  {
 
-        ImageView area_counseling_image;
+        CircleImageView area_counseling_image;
         TextView area_counseling_catogory;
         LinearLayout linearLayout;
 

@@ -4,17 +4,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Consults;
 import com.Tamazj.TamazjApp.R;
+import com.Tamazj.TamazjApp.UserFragment.ConsoultUserFragmentDetails;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -72,6 +76,18 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
                 load(consults.get(position).getConsultant_id().getPhoto()).
                 error(R.drawable.image).resize(90, 100).into(holder.img);
 
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.Consultation_ID, consults.get(position).getId() + "");
+                Fragment fragment = new ConsoultUserFragmentDetails();
+                fragment.setArguments(bundle);
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "ConsoultUserFragmentDetails").commit();
+
+            }
+        });
+
     }
 
     public String getURLForResource(int resourceId) {
@@ -104,6 +120,7 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
         @Override
         public void onClick(View v) {
             if (v == container) {
+
 
             }
         }

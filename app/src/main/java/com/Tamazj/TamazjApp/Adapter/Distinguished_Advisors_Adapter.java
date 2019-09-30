@@ -98,5 +98,7 @@ public class Distinguished_Advisors_Adapter  extends RecyclerView.Adapter<Distin
         }
 
     }
+
+
 }
 

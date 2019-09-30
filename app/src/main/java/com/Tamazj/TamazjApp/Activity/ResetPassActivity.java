@@ -52,7 +52,7 @@ public class ResetPassActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(ResetPassActivity.this);
 
         sharedPreferences = getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.advisor_back);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

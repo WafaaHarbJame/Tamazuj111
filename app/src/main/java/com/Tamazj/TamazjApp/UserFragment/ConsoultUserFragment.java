@@ -199,6 +199,7 @@ public class ConsoultUserFragment extends Fragment {
                         //Toast.makeText(getActivity(), "" + time, Toast.LENGTH_SHORT).show();
                         JSONObject catogory = jsonArray.getJSONObject(i).getJSONObject("category_id");
                         JSONObject consultant_data = jsonArray.getJSONObject(i).getJSONObject("consultant_id");
+                        int consultant_data_id = consultant_data.getInt("id");
                         JSONObject sup_category_data = jsonArray.getJSONObject(i).getJSONObject("sub_category_id");
                         if (sup_category_data != null) {
                             if (lang.equals("ar")) {
@@ -208,6 +209,12 @@ public class ConsoultUserFragment extends Fragment {
                             }
 
 
+                        } else {
+                            if (lang.equals("ar")) {
+                                arabic_catogoryname = catogory.getString("name_ar");
+                            } else {
+                                english_catogoryname = catogory.getString("name_en");
+                            }
                         }
                         //  Toast.makeText(getActivity(), ""+sup_category_data.getString("name_en"), Toast.LENGTH_SHORT).show();
 
@@ -217,11 +224,7 @@ public class ConsoultUserFragment extends Fragment {
                         Log.e("photo", "" + photo);
                         //Toast.makeText(getActivity(), "" + photo, Toast.LENGTH_SHORT).show();
                         int consultant_id = consultant_data.getInt("id");
-                        if (lang.equals("ar")) {
-                            arabic_catogoryname = catogory.getString("name_ar");
-                        } else {
-                            english_catogoryname = catogory.getString("name_en");
-                        }
+
 
                         Consults.DataBean consults = new Consults.DataBean();
                         Consults.DataBean.SessionTimeBean sessionTimeBean = new Consults.DataBean.SessionTimeBean();
@@ -231,6 +234,7 @@ public class ConsoultUserFragment extends Fragment {
                         categoryIdBean.setName_en(english_catogoryname);
                         consultantIdBean.setName(consultant_name);
                         consultantIdBean.setPhoto(photo);
+                        consultantIdBean.setId(consultant_data_id);
                         sessionTimeBean.setTime(time);
                         consults.setStatus(status);
                         consults.setSession_time(sessionTimeBean);

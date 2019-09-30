@@ -169,5 +169,8 @@
     <string name="choose_lang">اختر اللغة</string>
     <string name="choose_lanague">اختر الدولة</string>
     <string name="tryAgain">حاول مرة أخرى</string>
+    <string name="means_of_communication">طريقة التواصل</string>
+    <string name="summary_problem">ملخص المشكلة</string>
+    <string name="myConsultDETAILS">تفاصيل الاستشارة</string>
 
 </resources>

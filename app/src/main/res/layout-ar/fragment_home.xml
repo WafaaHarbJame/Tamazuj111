@@ -112,7 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <ImageView
-                android:id="@+id/back"
+                android:id="@+id/advisor_back"
                 android:layout_width="18dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -151,8 +151,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/Areas_Counseling" />
 
             <ImageView
-                android:id="@+id/Advisors_back"
-                android:layout_width="wrap_content"
+                android:id="@+id/consulta_back"
+                android:layout_width="14dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"

@@ -168,5 +168,8 @@
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="default_notification_channel_name" translatable="true">Weather</string>
     <string name="tryAgain">Try again</string>
+    <string name="means_of_communication">type of communication</string>
+    <string name="summary_problem">summary_problem</string>
+    <string name="myConsultDETAILS">My Consults Details</string>
 
 </resources>
