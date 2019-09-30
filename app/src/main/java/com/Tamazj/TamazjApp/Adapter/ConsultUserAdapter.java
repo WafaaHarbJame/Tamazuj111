@@ -38,7 +38,7 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.advisor_constluct_layout, parent, false);
+        View view = inflater.inflate(R.layout.user_constluct_layout, parent, false);
         MyHolder holder = new MyHolder(view);
         if (sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
             lang = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
@@ -55,17 +55,18 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
             holder.name.setText(consults.get(position).getConsultant_id().getName());
         holder.consultStatusFinished.setText(consults.get(position).getStatus());
             holder.time.setText(consults.get(position).getSession_time().getTime());
-           /* if (lang.matches("ar")) {
+        if (lang.matches("ar")) {
                 if(consults.get(position).getCategory_id().getName_ar()!=null) {
                     holder.type.setText(consults.get(position).getCategory_id().getName_ar());
                 }
 
-            } else  if(consults.get(position).getCategory_id().getName_en()!=null){
+        } else if (lang.matches("en")) {
+            if (consults.get(position).getCategory_id().getName_en() != null) {
 
                 holder.type.setText(consults.get(position).getCategory_id().getName_en());
 
-            }*/
-
+            }
+        }
 
         Picasso.with(context).
                 load(consults.get(position).getConsultant_id().getPhoto()).

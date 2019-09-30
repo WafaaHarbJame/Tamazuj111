@@ -158,7 +158,7 @@ public class MyConsultationragment extends Fragment {
                                     if(lang.equals("ar"))
                                         category =jsonObject2.get("name_ar").toString();
                                     else category =jsonObject2.get("name_en").toString();
-                                    Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -166,7 +166,7 @@ public class MyConsultationragment extends Fragment {
                             Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
                             if(status.matches(AppConstants.ACTIVE)) {
                                 distinguished_advisors_models.add(new Distinguished_Advisors_Model(photo, name, category, id));
-                                Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
+                                //  Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -98,7 +98,7 @@ public class ConsoultUserFragment extends Fragment {
 
             //  getUserConsultation(choosing_langauge, "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImM2OTMxZDNkM2U3ZTViYzEwZDg0NDhmNDBlODQ3NTBmYWRmNGI5MTNmODA5NGQ2NmM1ZjhlMDAwYjdmYzgxM2MwODNmZDdjNGRhMjk4MzczIn0.eyJhdWQiOiIxIiwianRpIjoiYzY5MzFkM2QzZTdlNWJjMTBkODQ0OGY0MGU4NDc1MGZhZGY0YjkxM2Y4MDk0ZDY2YzVmOGUwMDBiN2ZjODEzYzA4M2ZkN2M0ZGEyOTgzNzMiLCJpYXQiOjE1Njc5OTE0NDcsIm5iZiI6MTU2Nzk5MTQ0NywiZXhwIjoxNTk5NjEzODQ3LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.Tfw3ex_BnGdr26Vr4U9X2jcsBa2kKddf8xf-Go0kALnQn1PJpqJuXoxou9WjRtODtRUDvwPoW3U4vn0EpTzZVU6udBxi9J7MaiDqKL3QTlt1OHLoby9T8pSoHMl0PMTlfg28mSthoAf8O0jijaO4Nb1_btKzcTS5-dro2g_jATTmw_RuVQGsG1nXgHvUm6H3hlQyA8WNA17OraOUzOk8oadTXDcT5X7aO5avk8skxLH_rA9-4FfgyzVY_HGSxFmbva3LJ0KCVkXWt9IbkdssBd2L3f0kkc8UkuC3tL5SioG_IjaO1lkmdL6bR_LdD9gELe1V9u1aJR6wab3LjrEh1zcXVaiJfEUVwJuMNs3PQ6-BaUVbcKQTo98MtrgmnoUGNCkBcFqINPIBxiVo3EfK_pajuHpQx6X83Gp4XakXqG6lu4hyPRWyEUvJXeJPM6t3ElAs6jffbnOz9p3sD53NtCpbKeC4v7LVcwxfGTYY4cjei0ShJyhsxPT05Lx6JZ564Rm4QTRsMaSwr262y1X6pe0vMGBk4TcA5FZ5IbbzD3-pmxE9H-INiLf2kpMX93WH6cd1vei16mvjcO8IGyR3bI2_omKPHmRD3qxAYxavMlpStVR7UAA35zBuS5eVqIJne4xP6f0Ekl9q9doIhBhz9LgmuCJ1_jyoXOgZsYSgDbU");
             getUserConsultation(choosing_langauge, token);
-            getUserConsulatant(choosing_langauge, token);
+            //getUserConsulatant(choosing_langauge, token);
 
 
         } else {
@@ -175,10 +175,11 @@ public class ConsoultUserFragment extends Fragment {
 
 
     public void getUserConsultation(final String lang, final String token) {
-        // showDialog();
+        showDialog();
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, AppConstants.user_consultation, new Response.Listener<String>() {
+            @SuppressLint("WrongConstant")
             @Override
             public void onResponse(String response) {
 
@@ -191,15 +192,29 @@ public class ConsoultUserFragment extends Fragment {
                         String arabic_catogoryname = "", english_catogoryname = "";
                         int id = jsonArray.getJSONObject(i).getInt("id");
                         String status = jsonArray.getJSONObject(i).getString("status");
-                        Toast.makeText(getActivity(), "" + status, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getActivity(), "" + status, Toast.LENGTH_SHORT).show();
                         JSONObject session = jsonArray.getJSONObject(i).getJSONObject("session_time");
                         String time = session.getString("time");
-                        Toast.makeText(getActivity(), "" + time, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "" + time, Toast.LENGTH_SHORT).show();
                         JSONObject catogory = jsonArray.getJSONObject(i).getJSONObject("category_id");
                         JSONObject consultant_data = jsonArray.getJSONObject(i).getJSONObject("consultant_id");
+                        JSONObject sup_category_data = jsonArray.getJSONObject(i).getJSONObject("sub_category_id");
+                        if (sup_category_data != null) {
+                            if (lang.equals("ar")) {
+                                arabic_catogoryname = sup_category_data.getString("name_ar");
+                            } else {
+                                english_catogoryname = sup_category_data.getString("name_en");
+                            }
+
+
+                        }
+                        //  Toast.makeText(getActivity(), ""+sup_category_data.getString("name_en"), Toast.LENGTH_SHORT).show();
+
+
                         String consultant_name = consultant_data.getString("name");
                         String photo = consultant_data.getString("photo");
-                        Toast.makeText(getActivity(), "" + photo, Toast.LENGTH_SHORT).show();
+                        Log.e("photo", "" + photo);
+                        //Toast.makeText(getActivity(), "" + photo, Toast.LENGTH_SHORT).show();
                         int consultant_id = consultant_data.getInt("id");
                         if (lang.equals("ar")) {
                             arabic_catogoryname = catogory.getString("name_ar");
@@ -214,9 +229,11 @@ public class ConsoultUserFragment extends Fragment {
                         categoryIdBean.setName_ar(arabic_catogoryname);
                         categoryIdBean.setName_en(english_catogoryname);
                         consultantIdBean.setName(consultant_name);
+                        consultantIdBean.setPhoto(photo);
                         sessionTimeBean.setTime(time);
                         consults.setStatus(status);
                         consults.setSession_time(sessionTimeBean);
+                        consults.setCategory_id(categoryIdBean);
                         consults.setId(id);
                         consults.setConsultant_id(consultantIdBean);
                         consultApplications.add(consults);
@@ -231,12 +248,12 @@ public class ConsoultUserFragment extends Fragment {
                     adapter.notifyDataSetChanged();
 
 
-                    //hideDialog();
+                    hideDialog();
 
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
-                    // hideDialog();
+                    hideDialog();
 
                 }
 
@@ -245,7 +262,7 @@ public class ConsoultUserFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                // hideDialog();
+                hideDialog();
 
 
             }
