@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_advisor_back"
+    android:layoutDirection="rtl"
+    android:textDirection="rtl"
+    tools:context=".Fragments.HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linaree"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/filter" />
+
+            <ImageView
+                android:id="@+id/astesharticontoolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/astesharticontoolbar" />
+
+            <TextView
+                android:id="@+id/toolbartiltle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:src="@drawable/logofortoolbar"
+                android:text="@string/myConsultDETAILS" />
+
+
+            <ImageView
+                android:id="@+id/blueBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/backblueicon" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        tools:layout_editor_absoluteY="50dp">
+
+        <ImageView
+            android:id="@+id/consultImage"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/activity_horizontal_margin_medium"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/gray_bacground"
+            android:padding="@dimen/activity_horizontal_margin_xlarge"
+            android:src="@drawable/image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.027" />
+
+        <TextView
+            android:id="@+id/tvConsultName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_medium"
+            android:text="@string/nameHint"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/text_header_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/consultImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvConsultType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_medium"
+            android:background="@drawable/gray_bacground"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="consult type"
+            app:layout_constraintBottom_toTopOf="@id/tvConsultTime"
+            app:layout_constraintStart_toEndOf="@+id/consultImage"
+            app:layout_constraintTop_toBottomOf="@id/tvConsultName" />
+
+        <TextView
+            android:id="@+id/tvConsultTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_medium"
+            android:drawableStart="@drawable/newtime"
+            android:drawablePadding="@dimen/activity_vertical_margin_medium"
+            android:gravity="center"
+            android:text="consult time"
+            app:layout_constraintBottom_toTopOf="@+id/tvmeans_of_communication"
+            app:layout_constraintStart_toEndOf="@+id/consultImage" />
+
+        <TextView
+            android:id="@+id/tvConsultStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_medium"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/gray_bacground"
+            android:drawableStart="@drawable/clock"
+            android:drawablePadding="@dimen/activity_vertical_margin_medium"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="@string/finished"
+            app:layout_constraintBottom_toTopOf="@+id/tvmeans_of_communication"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.63"
+            app:layout_constraintStart_toEndOf="@+id/tvConsultTime"
+            app:layout_constraintTop_toTopOf="@+id/tvConsultTime" />
+
+        <TextView
+            android:id="@+id/means_of_communication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_small"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="@string/means_of_communication"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/tvmeans_of_communication"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/consultImage" />
+
+        <TextView
+            android:id="@+id/tvmeans_of_communication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_small"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="@string/means_of_communication"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/consultImage" />
+
+        <TextView
+            android:id="@+id/summary_problem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_small"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="@string/summary_problem"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/tvmeans_of_communication"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/means_of_communication" />
+
+        <TextView
+            android:id="@+id/tvsummary_problem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin_small"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:padding="@dimen/activity_vertical_margin_medium"
+            android:text="@string/summary_problem"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.531"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/means_of_communication" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>
