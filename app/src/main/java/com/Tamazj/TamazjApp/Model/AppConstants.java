@@ -17,20 +17,23 @@ public interface AppConstants {
     String NOT_SATISFIED = "NOT_SATISFIED";
     String CONSULT_TYPE = "CONSULT_TYPE";
     String SESSION_TYPE = "SESSION_TYPE";
-    String FIRST_SESSION = "FIRST_SESSION";
-    String SECOND_SESSION = "SECOND_SESSION";
-    String THIRD_SESSION = "THIRD_SESSION";
-    String SPECIAL_SESSION = "SPECIAL_SESSION";
+    String FIRST_SESSION = "1";
+    String SECOND_SESSION = "2";
+    String THIRD_SESSION = "3";
+    String SPECIAL_SESSION = "4";
     String toolbartiltle = "toolbartiltle";
     String ACTIVE = "الحساب  مفعل ";
     String NOT_ACTIVE = "الحساب غير مفعل";
     String ADVISOR_ID = "ADVISOR_ID";
     String CATEGORY_ID = "CATEGORY_ID";
+    String Sub_CATEGORY_ID = "Sub_CATEGORY_ID";
     String Consultation_ID = "Consultation_ID";
+    String CATEGORY_TYPE = "CATEGORY_TYPE";
     String token = "token";
     String ISLOGIN = "ISLOGIN";
     String FCM_TOKEN = "FCM_TOKEN";
     String LANG_choose = "LANG_choose";
+    String SUCCESS = "تم بنجاح";
 
     //-----------------------------APIs-------------------------------------------------------------
 

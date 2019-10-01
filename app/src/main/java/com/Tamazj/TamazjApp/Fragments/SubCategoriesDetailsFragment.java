@@ -136,6 +136,8 @@ public class SubCategoriesDetailsFragment extends Fragment {
                 AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
                 Bundle bundle = new Bundle();
                 bundle.putString(AppConstants.ADVISOR_ID, categories.get(position).getId());
+                bundle.putString(AppConstants.CATEGORY_ID, categories.get(position).getCategoryId());
+                bundle.putString(AppConstants.CATEGORY_TYPE, categories.get(position).getCatoroytype());
                 advisoeDeailsBottomDialog.setArguments(bundle);
                 advisoeDeailsBottomDialog.show(getFragmentManager(), advisoeDeailsBottomDialog.getTag());
 
