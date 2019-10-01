@@ -49,15 +49,23 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyHolder> 
             Picasso.with(context).load(reviews.get(position).getImgUrl()).into(holder.img);
 
             switch (reviews.get(position).getRate()){
-                case AppConstants.HAPPY :
+                case AppConstants.RATING_5 :
                     holder.feedbackIcon.setImageResource(R.drawable.love);
                     break;
 
-                case AppConstants.SATISFIED :
+                case AppConstants.RATING_4 :
                     holder.feedbackIcon.setImageResource(R.drawable.radi);
                     break;
 
-                case AppConstants.NOT_SATISFIED :
+                case AppConstants.RATING_3 :
+                    holder.feedbackIcon.setImageResource(R.drawable.radi);
+                    break;
+
+                case AppConstants.RATING_2 :
+                    holder.feedbackIcon.setImageResource(R.drawable.notradi);
+                    break;
+
+                case AppConstants.RATING_1 :
                     holder.feedbackIcon.setImageResource(R.drawable.notradi);
                     break;
 

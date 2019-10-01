@@ -7,6 +7,11 @@ public interface AppConstants {
     String ACCOUNT_TYPE = "ACCOUNT_TYPE";
     String Beneficiary = "Beneficiary";
     String Advisor = "Advisor";
+    String RATING_5 = "5";
+    String RATING_4 = "4";
+    String RATING_3 = "3";
+    String RATING_2 = "2";
+    String RATING_1 = "1";
     String HAPPY = "HAPPY";
     String SATISFIED = "SATISFIED";
     String NOT_SATISFIED = "NOT_SATISFIED";
@@ -47,5 +52,6 @@ public interface AppConstants {
     String user_consultation = "http://salahalimohamed.website/tmajog/api/v1/user/consultation";
     String user_consultation_details = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
     String HOME = "http://salahalimohamed.website/tmajog/api/v1/user/home";
+    String FEEDBACK = "http://salahalimohamed.website/tmajog/api/v1/consultants/feedback/";
     //----------------------------------------------------------------------------------------------
 }

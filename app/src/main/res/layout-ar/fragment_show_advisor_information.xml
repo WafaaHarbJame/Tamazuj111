@@ -12,8 +12,8 @@
         android:id="@+id/toolbarShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="#00000000"
-       android:layout_alignParentTop="true"
         tools:ignore="MissingConstraints">
 
         <ImageButton
@@ -138,8 +138,8 @@
 
                     <ImageButton
                         android:id="@+id/profileImage"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
                         android:background="@drawable/gray_bacground"
                         android:src="@drawable/imageprofile"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -162,34 +162,10 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="@dimen/activity_vertical_margin_large"
-                android:background="#00000000"
-                android:id="@+id/advisorSessionsLayout"
-                android:gravity="top"
-                android:padding="@dimen/activity_vertical_margin_medium">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvAboutAdvisorText"
-                    android:gravity="start"
-                    android:text="@string/notificationText"
-                    android:padding="@dimen/activity_vertical_margin_small"/>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:id="@+id/sessionRecycler"
-                    android:layout_height="match_parent">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-            </LinearLayout>
+          <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/aboutReviewLayout"/>
         </LinearLayout>
     </ScrollView>
     <LinearLayout

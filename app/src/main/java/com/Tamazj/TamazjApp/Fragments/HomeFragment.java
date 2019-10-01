@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
     private ImageView advisor_back;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         initView();
         handler = new Handler();
@@ -108,13 +108,14 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void onPageSelected(int position) {
-                if (position == 0) {
-                    currentPage = 0;
-                } else if (position == 1) {
-                    currentPage = 1;
-                } else {
-                    currentPage = 2;
-                }
+//                if (position == 0) {
+//                    currentPage = 0;
+//                } else if (position == 1) {
+//                    currentPage = 1;
+//                } else {
+//                    currentPage = 2;
+//                }
+                currentPage = position;
             }
             @Override
             public void onPageScrollStateChanged(int state) {
@@ -175,7 +176,7 @@ public class HomeFragment extends Fragment {
             public void onFinish() {
                 int nextSlider = currentPage + 1;
 
-                if (nextSlider == 3) {
+                if (nextSlider == 9) {
                     nextSlider = 0; // if it's last Image, let it go to the first image
                 }
                 viewPager.setCurrentItem(nextSlider);
