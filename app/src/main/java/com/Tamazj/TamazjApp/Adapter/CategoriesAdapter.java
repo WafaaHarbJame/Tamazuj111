@@ -76,19 +76,19 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             }
         });
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new CategoriesdetailsFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(AppConstants.CATEGORY_ID, categories.get(position).getCategoryId());
-                bundle.putString(AppConstants.toolbartiltle, categories.get(position).getCatoroytype());
-                fragment.setArguments(bundle);
-                ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
-
-
-            }
-        });
+//        holder.cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = new CategoriesdetailsFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString(AppConstants.CATEGORY_ID, categories.get(position).getCategoryId());
+//                bundle.putString(AppConstants.toolbartiltle, categories.get(position).getCatoroytype());
+//                fragment.setArguments(bundle);
+//                ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
+//
+//
+//            }
+//        });
 
 
     }
