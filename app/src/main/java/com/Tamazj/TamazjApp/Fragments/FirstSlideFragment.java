@@ -50,7 +50,7 @@ public class FirstSlideFragment extends Fragment {
     CardView cardview;
     int ADVISOR_POSITION;
     String lang, token;
-    String name, photo, rating, status;
+    String id, name, photo, rating, status, categoryId, category;
 
 
     public FirstSlideFragment() {
@@ -102,6 +102,9 @@ public class FirstSlideFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.ADVISOR_ID, id);
+                advisoeDeailsBottomDialog.setArguments(bundle);
                 advisoeDeailsBottomDialog.show(getFragmentManager(), advisoeDeailsBottomDialog.getTag());
 
             }
@@ -110,7 +113,12 @@ public class FirstSlideFragment extends Fragment {
         cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new CategoriesdetailsFragment(), "HomeFragment").commit();
+                Fragment fragment = new CategoriesdetailsFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.CATEGORY_ID, categoryId);
+                bundle.putString(AppConstants.toolbartiltle, category);
+                fragment.setArguments(bundle);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
 
 
             }
@@ -140,7 +148,7 @@ public class FirstSlideFragment extends Fragment {
                    // for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(ADVISOR_POSITION);
                             Log.e("WAFAA", jsonObject.toString());
-                            String id = jsonObject.get("id").toString();
+                            id = jsonObject.get("id").toString();
                             name = jsonObject.get("name").toString();
                             rating = jsonObject.get("rating").toString();
                             photo = jsonObject.get("photo").toString();
@@ -153,19 +161,19 @@ public class FirstSlideFragment extends Fragment {
 //                            Toast.makeText(getContext(), ""+rating, Toast.LENGTH_SHORT).show();
 
                             // }
-//                            JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
-//                            String category = "";
-//                            try {
-//                                JSONObject jsonObject2 = jsonArrayCategory.getJSONObject(0);
-//                                if (lang.equals("ar"))
-//                                    category = jsonObject2.get("name_ar").toString();
-//                                else category = jsonObject2.get("name_en").toString();
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
+                            JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
+                            try {
+                                JSONObject jsonObject2 = jsonArrayCategory.getJSONObject(0);
+                                categoryId = jsonObject2.get("id").toString();
+                                if (lang.equals("ar"))
+                                    category = jsonObject2.get("name_ar").toString();
+                                else category = jsonObject2.get("name_en").toString();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
 
-                  //  }
+               //     }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
