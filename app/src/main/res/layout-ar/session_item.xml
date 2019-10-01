@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/session_image"
-            android:background="@drawable/englishrequesticon"
+            android:background="@drawable/requesticon"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/session_time_price"
             android:layout_alignBottom="@+id/session_time_price"
