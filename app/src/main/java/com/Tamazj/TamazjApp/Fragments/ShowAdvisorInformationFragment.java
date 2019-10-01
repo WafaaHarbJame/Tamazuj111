@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.Tamazj.TamazjApp.Api.MyApplication;
 import com.Tamazj.TamazjApp.MainActivity;
 import com.Tamazj.TamazjApp.Model.AdvisoeDeailsBottomDialog;
 import com.Tamazj.TamazjApp.Model.AppConstants;
+import com.Tamazj.TamazjApp.Model.Categories;
 import com.Tamazj.TamazjApp.Model.Review;
 import com.Tamazj.TamazjApp.Model.Session;
 import com.Tamazj.TamazjApp.R;
@@ -60,6 +62,7 @@ public class ShowAdvisorInformationFragment extends Fragment {
     TextView tvAdvisorName, tvRatePercent, tvAskConsult, tvAdvisorAbout, tvAdvisorReviews, tvAboutAdvisorText;
     RecyclerView rvShowAdvisorInf ,rvBeneficiariesFeedback;
     LayoutInflater inf;
+    FrameLayout aboutReviewLayout;
     List<String> listShowAdvisorInf;
     TextViewAdapter textViewAdapter;
     List<Review> list;
@@ -104,8 +107,19 @@ public class ShowAdvisorInformationFragment extends Fragment {
         tvRatePercent = view.findViewById(R.id.tvRatePercent);
         rvShowAdvisorInf = view.findViewById(R.id.rvShowAdvisorInf);
         tvAskConsult = view.findViewById(R.id.tvAskConsult);
+        aboutReviewLayout = view.findViewById(R.id.aboutReviewLayout);
         tvAdvisorAbout = view.findViewById(R.id.tvAdvisorAbout);
         tvAdvisorReviews = view.findViewById(R.id.tvAdvisorReviews);
+
+
+
+        aboutReviewsView = inf.inflate(R.layout.advisor_about_layout,aboutReviewLayout);
+        tvAboutAdvisorText = aboutReviewsView.findViewById(R.id.tvAboutAdvisorText);
+
+        listShowAdvisorInf = new ArrayList<>();
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
+//        listShowAdvisorInf.add(getString(R.string.family_consultane));
 
 
         final Bundle bundle = getArguments();
@@ -117,25 +131,18 @@ public class ShowAdvisorInformationFragment extends Fragment {
             Toast.makeText(getContext(), ""+getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
         }
 
-
-        listShowAdvisorInf = new ArrayList<>();
-//        listShowAdvisorInf.add(getString(R.string.family_consultane));
-//        listShowAdvisorInf.add(getString(R.string.family_consultane));
-//        listShowAdvisorInf.add(getString(R.string.family_consultane));
         textViewAdapter = new TextViewAdapter(getContext(), listShowAdvisorInf);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         rvShowAdvisorInf.setLayoutManager(layoutManager);
         rvShowAdvisorInf.setAdapter(textViewAdapter);
-        SessionRecycler=view.findViewById(R.id.sessionRecycler);
+        SessionRecycler= aboutReviewsView.findViewById(R.id.sessionRecycler);
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         SessionRecycler.setHasFixedSize(true);
         sessionAdapter = new SessionAdapterwithoutImage(getContext(),sessionlist);
-
         getSessionTime();
 
-        aboutReviewsView = inf.inflate(R.layout.advisor_about_layout,null);
-        tvAboutAdvisorText = aboutReviewsView.findViewById(R.id.tvAboutAdvisorText);
+
 
         tvAskConsult.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +166,8 @@ public class ShowAdvisorInformationFragment extends Fragment {
                 tvAdvisorReviews.setBackground(null);
                 tvAdvisorReviews.setTextColor(R.color.colorBlack);
 
-                aboutReviewsView = inf.inflate(R.layout.advisor_about_layout,null);
+                aboutReviewLayout.removeAllViews();
+                aboutReviewsView = inf.inflate(R.layout.advisor_about_layout,aboutReviewLayout);
                 tvAboutAdvisorText = aboutReviewsView.findViewById(R.id.tvAboutAdvisorText);
 
             }
@@ -175,13 +183,17 @@ public class ShowAdvisorInformationFragment extends Fragment {
                 tvAdvisorAbout.setBackground(null);
                 tvAdvisorAbout.setTextColor(R.color.colorBlack);
 
-                aboutReviewsView = inf.inflate(R.layout.advisor_reviews_layout,null);
+                aboutReviewLayout.removeAllViews();
+                aboutReviewsView = inf.inflate(R.layout.advisor_reviews_layout,aboutReviewLayout);
                 rvBeneficiariesFeedback = aboutReviewsView.findViewById(R.id.rvBeneficiariesFeedback);
 
                 list = new ArrayList<>();
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.HAPPY,getString(R.string.notificationText)));
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.SATISFIED,getString(R.string.notificationText)));
-                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.NOT_SATISFIED,getString(R.string.notificationText)));
+                fillList(ADVISOR_ID);
+
+//                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.HAPPY,getString(R.string.notificationText)));
+//                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.SATISFIED,getString(R.string.notificationText)));
+//                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), AppConstants.NOT_SATISFIED,getString(R.string.notificationText)));
+//
                 adapter = new ReviewAdapter(getContext(), list);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
                 rvBeneficiariesFeedback.setLayoutManager(layoutManager);
@@ -270,6 +282,64 @@ public class ShowAdvisorInformationFragment extends Fragment {
         };
 
         MyApplication.getInstance().addToRequestQueue(stringRequest);
+
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    private void fillList(String ADVISOR_ID) {
+
+        showDialog();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.FEEDBACK+ADVISOR_ID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject r = new JSONObject(response);
+
+                        JSONArray jsonArray = r.getJSONArray("data");
+                    Log.e("WAFAA", jsonArray.toString());
+
+                        for(int j=0;j<jsonArray.length();j++){
+                            try {
+                                JSONObject jsonObject =  jsonArray.getJSONObject(j);
+                                String feedback =jsonObject.get("feedback").toString();
+                                String ratting = jsonObject.get("ratting").toString();
+                                //Toast.makeText(getContext(), ""+feedback, Toast.LENGTH_SHORT).show();
+                                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), ratting,feedback));
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    adapter.notifyDataSetChanged();
+
+                hideDialog();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideDialog();
+                Toast.makeText(getContext(), getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+                 Log.e("WAFAA", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap();
+                map.put("lang", lang);
+                return map;
+
+            }
+        };
+
+        MyApplication.getInstance().addToRequestQueue(stringRequest);
+
+
 
     }
 
