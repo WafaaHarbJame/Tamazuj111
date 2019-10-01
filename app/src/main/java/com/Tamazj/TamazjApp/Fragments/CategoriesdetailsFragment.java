@@ -226,11 +226,11 @@ public class CategoriesdetailsFragment extends Fragment {
                                                                 Adcategory = jsonObjectCategory.get("name_en").toString();
                                                             //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
                                                             String AdPhoto = jsonObjectAdvisor.get("photo").toString();
-                                                            String rating = jsonObjectAdvisor.get("rating").toString();
+                                                            String rating = jsonObjectAdvisor.get("rating").toString()+"%";
                                                             String status = jsonObjectAdvisor.get("status").toString();
                                                             Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
                                                             if (status.equals(AppConstants.ACTIVE)) {
-                                                                categories.add(new Categories(rating, AdPhoto, AdName, "", Adcategory, AdId));
+                                                                categories.add(new Categories(rating, AdPhoto, AdName, "", Adcategory, AdId, id));
                                                                 Log.e("kh", categories.toString());
                                                             }
 
