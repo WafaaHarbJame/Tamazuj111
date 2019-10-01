@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tamazj.TamazjApp.Adapter.Areas_Counseling_adapter;
 import com.Tamazj.TamazjApp.Adapter.CategoriesAdapter;
 import com.Tamazj.TamazjApp.Adapter.SupCategoriesAdapter;
 import com.Tamazj.TamazjApp.Api.MyApplication;
@@ -230,9 +229,15 @@ public class CategoriesdetailsFragment extends Fragment {
                                                             String AdPhoto = jsonObjectAdvisor.get("photo").toString();
                                                             String rating = jsonObjectAdvisor.get("rating").toString()+"%";
                                                             String status = jsonObjectAdvisor.get("status").toString();
+                                                            String biography = jsonObjectAdvisor.get("biography").toString();
+                                                            if (biography.matches("") || biography.equals(null)) {
+                                                                biography = "";
+                                                            }
+
+
                                                             Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
                                                             if (status.equals(AppConstants.ACTIVE)) {
-                                                                categories.add(new Categories(rating, AdPhoto, AdName, "", Adcategory, AdId, id));
+                                                                categories.add(new Categories(rating, AdPhoto, AdName, biography, Adcategory, AdId, id));
                                                                 Log.e("kh", categories.toString());
                                                             }
 

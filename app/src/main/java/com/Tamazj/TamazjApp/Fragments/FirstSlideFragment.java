@@ -1,7 +1,6 @@
 package com.Tamazj.TamazjApp.Fragments;
 
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -18,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.Tamazj.TamazjApp.Api.MyApplication;
 import com.Tamazj.TamazjApp.Model.AdvisoeDeailsBottomDialog;
 import com.Tamazj.TamazjApp.Model.AppConstants;
-import com.Tamazj.TamazjApp.Model.Distinguished_Advisors_Model;
 import com.Tamazj.TamazjApp.R;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,7 +47,7 @@ public class FirstSlideFragment extends Fragment {
     CardView cardview;
     int ADVISOR_POSITION;
     String lang, token;
-    String id, name, photo, rating, status, categoryId, category;
+    String id, name, photo, rating, status, categoryId, category, biography;
 
 
     public FirstSlideFragment() {
@@ -155,10 +152,14 @@ public class FirstSlideFragment extends Fragment {
                             rating = jsonObject.get("rating").toString();
                             photo = jsonObject.get("photo").toString();
                             status = jsonObject.get("status").toString();
+                    biography = jsonObject.getString("biography");
                             // if(status.matches(AppConstants.ACTIVE)) {
-
+                    if (biography.matches("") || biography.equals(null)) {
+                        biography = "";
+                    }
                             Picasso.with(getContext()).load(photo).into(profileimage);
                             profile_name.setText(name);
+                    profile_dsc.setText(biography);
                             percent.setText(rating+"%");
 //                            Toast.makeText(getContext(), ""+rating, Toast.LENGTH_SHORT).show();
 
