@@ -33,7 +33,7 @@
 
             app:layout_constraintTop_toTopOf="parent">
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/askasteschar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/englishrequest"
@@ -85,7 +85,7 @@
                 app:layout_constraintEnd_toStartOf="@id/profileimage"
                 app:layout_constraintHorizontal_bias="0.007"
                 app:layout_constraintStart_toEndOf="@+id/profileimage"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/askasteschar" />
 
             <TextView
                 android:id="@+id/profile_dsc"

@@ -1,6 +1,5 @@
 package com.Tamazj.TamazjApp.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +20,6 @@ import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
 import com.Tamazj.TamazjApp.Model.Categories;
 import com.Tamazj.TamazjApp.R;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -121,7 +118,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
             profile_dsc = itemView.findViewById(R.id.profile_dsc);
             catoroytype = itemView.findViewById(R.id.catoroytype);
             cardView = itemView.findViewById(R.id.cardview);
-            askasteschar = itemView.findViewById(R.id.imageView3);
+            askasteschar = itemView.findViewById(R.id.askasteschar);
 
 
 
