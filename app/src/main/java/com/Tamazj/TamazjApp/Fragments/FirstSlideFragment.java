@@ -103,6 +103,8 @@ public class FirstSlideFragment extends Fragment {
             public void onClick(View v) {
                 AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
                 Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.CATEGORY_ID, categoryId);
+                bundle.putString(AppConstants.CATEGORY_TYPE, category);
                 bundle.putString(AppConstants.ADVISOR_ID, id);
                 advisoeDeailsBottomDialog.setArguments(bundle);
                 advisoeDeailsBottomDialog.show(getFragmentManager(), advisoeDeailsBottomDialog.getTag());

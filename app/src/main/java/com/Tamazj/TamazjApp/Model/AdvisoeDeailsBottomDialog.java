@@ -55,7 +55,7 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
 
     SessionAdapter sessionAdapter;
 
-    String ADVISOR_ID, lang;
+    String ADVISOR_ID, categoryId, category, subCategoryId, lang, token;
 
 
     @SuppressLint({"RestrictedApi", "WrongConstant"})
@@ -72,6 +72,9 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
         } else {
             lang = Locale.getDefault().getLanguage();
         }
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.token,Locale.getDefault().getLanguage()) != null){
+            token = sharedPreferences.getString(AppConstants.token,Locale.getDefault().getLanguage());
+        }
 
         Bundle bundle = getArguments();
         if( bundle != null && bundle.getString(AppConstants.ADVISOR_ID)!= null){
@@ -80,6 +83,18 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
             getData(ADVISOR_ID);
         } else {
             Toast.makeText(getContext(), ""+getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
+        }
+
+        if( bundle != null && bundle.getString(AppConstants.CATEGORY_ID)!= null){
+            categoryId = bundle.getString(AppConstants.CATEGORY_ID);
+        }
+
+        if( bundle != null && bundle.getString(AppConstants.Sub_CATEGORY_ID)!= null){
+            subCategoryId = bundle.getString(AppConstants.Sub_CATEGORY_ID);
+        }
+
+        if( bundle != null && bundle.getString(AppConstants.CATEGORY_TYPE)!= null){
+            category = bundle.getString(AppConstants.CATEGORY_TYPE);
         }
 
         dialogButtonCancel =  viewDialog.findViewById(R.id.cancelButton);
@@ -114,10 +129,10 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         SessionRecycler.setHasFixedSize(true);
-        sessionAdapter = new SessionAdapter(getContext(),sessionlist);
 
         getSessionTime();
 
+        sessionAdapter = new SessionAdapter(getContext(),sessionlist, categoryId, category, subCategoryId, ADVISOR_ID, lang, token);
 
 
         final Intent intent = new Intent(getActivity(), BillActivity.class);
@@ -139,6 +154,77 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
 
 
     public void getSessionTime() {
+
+        // showDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.session_times, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Wafaa", response);
+
+                try {
+                    JSONObject session_response = new JSONObject(response);
+                    JSONArray jsonArray = session_response.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        int id = jsonArray.getJSONObject(i).getInt("id");
+                        String time =  jsonArray.getJSONObject(i).getString("time");
+                        String price =  jsonArray.getJSONObject(i).getString("price");
+                        Session.DataBean session = new Session.DataBean();
+                        session.setId(id);
+                        session.setPrice(price);
+                        session.setTime(time);
+                        sessionlist.add(session);
+
+                    }
+
+                    SessionRecycler.setLayoutManager(linearLayoutManager);
+                    SessionRecycler.setAdapter(sessionAdapter);
+                    sessionAdapter.notifyDataSetChanged();
+
+
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                    // hideDialog();
+
+                }
+
+
+                // hideDialog();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+
+
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+
+                return headers;
+
+            }
+
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+
+                return headers;
+            };
+        };
+
+        MyApplication.getInstance().addToRequestQueue(stringRequest);
+
+    }
+    public void getSessionTime(String category, String subCategory, String advisor) {
 
         // showDialog();
 
@@ -233,9 +319,21 @@ public class AdvisoeDeailsBottomDialog extends BottomSheetDialogFragment {
                         String rating = jsonObject.get("rating").toString()+"%";
                         tvRatePercent.setText(rating);
                         JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
-                        for(int j=0;j<jsonArrayCategory.length();j++){
+                        try {
+                            JSONObject jsonObject2 =  jsonArrayCategory.getJSONObject(0);
+                            categoryId =jsonObject2.get("name_ar").toString();
+                            if(lang.equals("ar"))
+                                category =jsonObject2.get("name_ar").toString();
+                            else category =jsonObject2.get("name_en").toString();
+                            list.add(category);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        JSONArray jsonArraySubCategory = jsonObject.getJSONArray("sub_category");
+                        for(int j=0;j<jsonArraySubCategory.length();j++){
                             try {
-                                JSONObject jsonObject2 =  jsonArrayCategory.getJSONObject(j);
+                                JSONObject jsonObject2 =  jsonArraySubCategory.getJSONObject(j);
                                 String category;
                                 if(lang.equals("ar"))
                                     category =jsonObject2.get("name_ar").toString();

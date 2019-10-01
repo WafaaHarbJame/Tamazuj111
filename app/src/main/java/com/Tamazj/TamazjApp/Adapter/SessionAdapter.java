@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tamazj.TamazjApp.Activity.BillActivity;
 import com.Tamazj.TamazjApp.Model.AppConstants;
+import com.Tamazj.TamazjApp.Model.RequestConsultation;
 import com.Tamazj.TamazjApp.Model.Session;
 import com.Tamazj.TamazjApp.R;
 
@@ -24,12 +26,31 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyHolder
     private Context context;
     private LayoutInflater inflater;
     int pos;
+    String categoryId, subCategoryId, category, advisorId, lang, token;
 
-    interface IClickListener{
-        void onItemClick(int position,List<Session> sessionlist, View enable);
+    public SessionAdapter(Context context, List<Session.DataBean> sessionlist,
+                          String categoryId, String category, String subCategoryId,
+                          String advisor_id, String lang, String token) {
+        this.lang = lang;
+        this.token = token;
+        this.categoryId = categoryId;
+        this.category = category;
+        this.subCategoryId = subCategoryId;
+        this.advisorId = advisor_id;
+        this.sessionlist = sessionlist;
+        this.context = context;
+        this.inflater = LayoutInflater.from(context);
     }
 
-    Areas_Counseling_adapter.IClickListener iClickListener;
+    interface IClickListener{
+        void onItemClick(int position,List<Session> sessionlist);
+    }
+
+    IClickListener iClickListener;
+
+    public void setIClickListener(IClickListener iClickListener){
+        this.iClickListener=iClickListener;
+    }
 
     public SessionAdapter(Context context, List<Session.DataBean> sessionlist){
         this.sessionlist = sessionlist;
@@ -54,9 +75,17 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyHolder
             @Override
             public void onClick(View v) {
                 final Intent intent = new Intent(context, BillActivity.class);
-                intent.putExtra(AppConstants.SESSION_TYPE, AppConstants.FIRST_SESSION);
-                intent.putExtra(AppConstants.CONSULT_TYPE, "consultType");
+                intent.putExtra(AppConstants.SESSION_TYPE, sessionlist.get(position).getId());
+                intent.putExtra(AppConstants.CONSULT_TYPE, category);
+                intent.putExtra(AppConstants.CATEGORY_ID, categoryId);
+                intent.putExtra(AppConstants.Sub_CATEGORY_ID, subCategoryId);
+                intent.putExtra(AppConstants.ADVISOR_ID, advisorId);
+                RequestConsultation requestConsultation = new RequestConsultation();
+                String message = requestConsultation.requestConsultation("video", "",  sessionlist.get(position).getId(), categoryId,
+                        advisorId, subCategoryId, "4", lang, token, context);
+                if(message.matches(AppConstants.SUCCESS))
                 context.startActivity(intent);
+                else Toast.makeText(context, ""+context.getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
             }
         });
 
