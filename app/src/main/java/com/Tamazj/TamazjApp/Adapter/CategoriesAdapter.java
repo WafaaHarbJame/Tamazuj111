@@ -44,6 +44,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     }
 
     boolean isClickable;
+    
 
     @Override
     public void onBindViewHolder(@NonNull final CategoriesAdapter.MyHolder holder, final int position) {
