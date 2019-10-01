@@ -137,8 +137,8 @@ public class FirstSlideFragment extends Fragment {
                     JSONObject r = new JSONObject(response);
                     JSONArray jsonArray = r.getJSONArray("bestRating");
 
-                    for (int i = 0; i < 8; i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                   // for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(ADVISOR_POSITION);
                             Log.e("WAFAA", jsonObject.toString());
                             String id = jsonObject.get("id").toString();
                             name = jsonObject.get("name").toString();
@@ -150,7 +150,7 @@ public class FirstSlideFragment extends Fragment {
                             Picasso.with(getContext()).load(photo).into(profileimage);
                             profile_name.setText(name);
                             percent.setText(rating+"%");
-                            Toast.makeText(getContext(), ""+rating, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), ""+rating, Toast.LENGTH_SHORT).show();
 
                             // }
 //                            JSONArray jsonArrayCategory = jsonObject.getJSONArray("category");
@@ -165,7 +165,7 @@ public class FirstSlideFragment extends Fragment {
 //                            }
 
 
-                    }
+                  //  }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
