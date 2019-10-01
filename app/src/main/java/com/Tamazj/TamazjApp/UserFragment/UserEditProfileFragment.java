@@ -132,11 +132,6 @@ public class UserEditProfileFragment extends Fragment implements IPickResult {
     String choosing_langauge;
 
 
-
-
-
-
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -604,8 +599,7 @@ fullName.setOnClickListener(new View.OnClickListener() {
                 NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
                 if (networkInfo != null && networkInfo.isConnected()) {
-                    if(updateusersocialstayus ||updateuserdate||updateusereducation||updateuseremmail||
-                            updateuserfulname||updateuserphone||updateusergender||updateuserimage || updateuserworkstayus) {
+                    if(updateusersocialstayus ||updateuserdate||updateusereducation||updateuseremmail|| updateuserfulname || updateuserphone || updateusergender || updateuserimage || updateuserworkstayus || updateusernationality) {
 
                         if (sharedPreferences != null) {
                             if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {

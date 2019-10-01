@@ -111,20 +111,6 @@ public class MyConsultationragment extends Fragment {
 
         fillList();
 
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات أسرية "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
-//        distinguished_advisors_models.add(new Distinguished_Advisors_Model("https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file","محمد حسن ","استشارات نفسية  "));
-//
-
         distinguished_advisors_adapter = new Distinguished_Advisors_Adapter(getContext(),distinguished_advisors_models);
         mDistinguishedAdvisors.setAdapter(distinguished_advisors_adapter);
 
@@ -158,15 +144,15 @@ public class MyConsultationragment extends Fragment {
                                     if(lang.equals("ar"))
                                         category =jsonObject2.get("name_ar").toString();
                                     else category =jsonObject2.get("name_en").toString();
-                                    Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                           //  }
-                            Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
                             if(status.matches(AppConstants.ACTIVE)) {
                                 distinguished_advisors_models.add(new Distinguished_Advisors_Model(photo, name, category, id));
-                                Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
+                                //  Toast.makeText(getContext(), ""+id, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

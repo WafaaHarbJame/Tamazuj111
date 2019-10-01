@@ -81,7 +81,6 @@ public class UserProfileFragment extends Fragment {
 
         if (sharedPreferences != null) {
             token = sharedPreferences.getString(AppConstants.token, "default value");
-            Toast.makeText(getActivity(), "" + token, Toast.LENGTH_SHORT).show();
             ConnectivityManager conMgr = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
@@ -142,7 +141,8 @@ public class UserProfileFragment extends Fragment {
 
     public void getUserProfile(final String token,final  String lang) {
 
-     // showDialog();
+        // showDialog();
+
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.USER_PROFILE, new Response.Listener<String>() {
             @Override
@@ -219,16 +219,16 @@ public class UserProfileFragment extends Fragment {
 
                     profileInformationAdapter = new ProfileInformationAdapter(getContext(), profileInformation);
                     profileInformationRecyclerView.setAdapter(profileInformationAdapter);
-                   // hideDialog();
+                    // hideDialog();
 
                 } catch (JSONException e1) {
                     e1.printStackTrace();
-                // hideDialog();
+                    // hideDialog();
 
                 }
 
 
-            // hideDialog();
+                // hideDialog();
 
 
             }
@@ -236,7 +236,7 @@ public class UserProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-               hideDialog();
+                //hideDialog();
 
 
             }
@@ -254,7 +254,7 @@ public class UserProfileFragment extends Fragment {
 
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer" + "  " + token);
                 headers.put("lang", lang);

@@ -156,14 +156,14 @@ public class MenuUserFragment extends Fragment {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new UserNotificationsFragment(), "HomeFragment").commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new UserNotificationsFragment(), "UserNotificationsFragment").commit();
             }
         });
 
         consultingRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new ConsoultUserFragment(), "HomeFragment").commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new ConsoultUserFragment(), "ConsoultUserFragment").commit();
             }
         });
 

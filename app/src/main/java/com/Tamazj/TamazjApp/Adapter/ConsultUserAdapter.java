@@ -2,42 +2,53 @@ package com.Tamazj.TamazjApp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Consults;
 import com.Tamazj.TamazjApp.R;
+import com.Tamazj.TamazjApp.UserFragment.ConsoultUserFragmentDetails;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.MyHolder> {
 
     final Context context;
     private final List<Consults.DataBean> consults;
-    private final List<Consults.DataBean.ConsultantIdBean> consultant_data;
-    private final List<Consults.DataBean.SessionTimeBean> session_data;
     MyHolder holder;
     private LayoutInflater inflater;
+    SharedPreferences sharedPreferences;
+    String lang;
 
-    public ConsultUserAdapter(Context context, List<Consults.DataBean> consults, List<Consults.DataBean.ConsultantIdBean> consultant_data, List<Consults.DataBean.SessionTimeBean> session_data) {
+
+    public ConsultUserAdapter(Context context, List<Consults.DataBean> consults) {
         this.consults = consults;
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.consultant_data = consultant_data;
-        this.session_data = session_data;
-        //this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.advisor_constluct_layout, parent, false);
+        View view = inflater.inflate(R.layout.user_constluct_layout, parent, false);
         MyHolder holder = new MyHolder(view);
+        if (sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null) {
+            lang = sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage());
+        } else {
+            lang = Locale.getDefault().getLanguage();
+        }
         return holder;
     }
 
@@ -45,22 +56,38 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
         this.holder = holder;
-        if (!(consults.isEmpty())) {
-            holder.name.setText(consultant_data.get(position).getName());
-            holder.consultStatusScheduled.setText(consults.get(position).getStatus());
-            holder.time.setText(session_data.get(position).getTime());
-            //holder.type.setText(consults.get(position).getConsultType());
-            //holder.time.setText(consults.get(position).getConsultPeriod());
-            //Picasso.with(context).load(consults.get(position).getConsultIcon()).into(holder.img);
-           /* if(consults.get(position).getStatus()){
-                holder.consultStatusFinished.setVisibility(View.GONE);
-                holder.consultStatusScheduled.setVisibility(View.VISIBLE);
-            } else {
-                holder.consultStatusScheduled.setVisibility(View.GONE);
-                holder.consultStatusFinished.setVisibility(View.VISIBLE);
-            }*/
+            holder.name.setText(consults.get(position).getConsultant_id().getName());
+        holder.consultStatusFinished.setText(consults.get(position).getStatus());
+            holder.time.setText(consults.get(position).getSession_time().getTime());
+        if (lang.matches("ar")) {
+                if(consults.get(position).getCategory_id().getName_ar()!=null) {
+                    holder.type.setText(consults.get(position).getCategory_id().getName_ar());
+                }
 
+        } else if (lang.matches("en")) {
+            if (consults.get(position).getCategory_id().getName_en() != null) {
+
+                holder.type.setText(consults.get(position).getCategory_id().getName_en());
+
+            }
         }
+
+        Picasso.with(context).
+                load(consults.get(position).getConsultant_id().getPhoto()).
+                error(R.drawable.image).resize(90, 100).into(holder.img);
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.Consultation_ID, consults.get(position).getId() + "");
+                Fragment fragment = new ConsoultUserFragmentDetails();
+                fragment.setArguments(bundle);
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "ConsoultUserFragmentDetails").commit();
+
+            }
+        });
+
     }
 
     public String getURLForResource(int resourceId) {
@@ -93,6 +120,7 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
         @Override
         public void onClick(View v) {
             if (v == container) {
+
 
             }
         }

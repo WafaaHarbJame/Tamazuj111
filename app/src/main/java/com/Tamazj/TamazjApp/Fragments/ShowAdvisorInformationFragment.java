@@ -3,6 +3,7 @@ package com.Tamazj.TamazjApp.Fragments;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +25,7 @@ import com.Tamazj.TamazjApp.Adapter.ReviewAdapter;
 import com.Tamazj.TamazjApp.Adapter.SessionAdapterwithoutImage;
 import com.Tamazj.TamazjApp.Adapter.TextViewAdapter;
 import com.Tamazj.TamazjApp.Api.MyApplication;
+import com.Tamazj.TamazjApp.MainActivity;
 import com.Tamazj.TamazjApp.Model.AdvisoeDeailsBottomDialog;
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Review;
@@ -88,7 +90,11 @@ public class ShowAdvisorInformationFragment extends Fragment {
         blueBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();      }
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                getActivity().startActivity(intent);
+
+                // getActivity().onBackPressed();
+            }
         });
 
         inf = LayoutInflater.from(getContext());

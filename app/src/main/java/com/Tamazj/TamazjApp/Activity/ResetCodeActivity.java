@@ -49,7 +49,7 @@ public class ResetCodeActivity extends AppCompatActivity {
         mResetcode = findViewById(R.id.resetcode);
         progressDialog = new ProgressDialog(ResetCodeActivity.this);
         sharedPreferences = getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
-        back = findViewById(R.id.back);
+        back = findViewById(R.id.advisor_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

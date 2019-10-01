@@ -21,15 +21,17 @@ public interface AppConstants {
     String NOT_ACTIVE = "الحساب غير مفعل";
     String ADVISOR_ID = "ADVISOR_ID";
     String CATEGORY_ID = "CATEGORY_ID";
-
+    String Consultation_ID = "Consultation_ID";
+    String token = "token";
+    String ISLOGIN = "ISLOGIN";
+    String FCM_TOKEN = "FCM_TOKEN";
+    String LANG_choose = "LANG_choose";
 
     //-----------------------------APIs-------------------------------------------------------------
 
     String USER_REGISTER = "http://salahalimohamed.website/tmajog/api/v1/user/register";
-    String ISLOGIN = "ISLOGIN";
     String USER_LOGIN = "http://salahalimohamed.website/tmajog/api/v1/user/login";
     String activateCode = "http://salahalimohamed.website/tmajog/api/v1/user/activateCode";
-    String token = "token";
     String USER_LOGOUT = "http://salahalimohamed.website/tmajog/api/v1/user/logout";
     String resetPass ="http://salahalimohamed.website/tmajog/api/v1/user/resetPass" ;
     String USER_PROFILE="http://salahalimohamed.website/tmajog/api/v1/user/profile";
@@ -37,13 +39,13 @@ public interface AppConstants {
     String resetCode="http://salahalimohamed.website/tmajog/api/v1/user/resetCode";
     String session_times="http://salahalimohamed.website/tmajog/api/v1/session-times";
     String countries ="http://salahalimohamed.website/tmajog/api/v1/countries";
-    String FCM_TOKEN ="FCM_TOKEN" ;
-    String LANG_choose ="LANG_choose" ;
     String updatePassword ="http://salahalimohamed.website/tmajog/api/v1/user/updatePassword";
     String ADVISORS_CONSULTANTS = "http://salahalimohamed.website/tmajog/api/v1/consultants";
     String ADVISOR_CONSULTANT = "http://salahalimohamed.website/tmajog/api/v1/consultants/";
     String CATEGORIES = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations";
     String CATEGORY = "http://salahalimohamed.website/tmajog/api/v1/category-of-consultations/";
     String user_consultation = "http://salahalimohamed.website/tmajog/api/v1/user/consultation";
+    String user_consultation_details = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
+    String HOME = "http://salahalimohamed.website/tmajog/api/v1/user/home";
     //----------------------------------------------------------------------------------------------
 }
