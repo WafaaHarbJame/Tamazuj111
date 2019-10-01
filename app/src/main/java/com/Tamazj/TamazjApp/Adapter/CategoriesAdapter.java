@@ -31,11 +31,15 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
     private LayoutInflater inflater;
     int pos;
 
-    interface IClickListener{
-        void onItemClick(int position,List<Areas_Counseling_Model> areas_counseling_models, View enable);
+    public interface IClickListener{
+        void onItemClick(int position,List<Categories> areas_counseling_models);
     }
 
-    Areas_Counseling_adapter.IClickListener iClickListener;
+    public void setIClickListener(IClickListener iClickListener){
+        this.iClickListener=iClickListener;
+    }
+
+    IClickListener iClickListener;
 
     public CategoriesAdapter(Context context, List<Categories> categories){
         this.categories = categories;
@@ -64,14 +68,18 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.My
         holder.profile_dsc.setText(categories.get(position).getProfile_dsc());
         holder.profile_name.setText(categories.get(position).getProfile_name());
         holder.catoroytype.setText(categories.get(position).getCatoroytype());
+
         holder.askasteschar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
-                Bundle bundle = new Bundle();
-                bundle.putString(AppConstants.ADVISOR_ID, categories.get(position).getId());
-                advisoeDeailsBottomDialog.setArguments(bundle);
-                //advisoeDeailsBottomDialog.show((BottomSheetDialogFragment)context).getFragmentManager(), advisoeDeailsBottomDialog.getTag());
+                if (iClickListener!=null){
+                    iClickListener.onItemClick(position,categories);
+                }
+//                AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
+//                Bundle bundle = new Bundle();
+//                bundle.putString(AppConstants.ADVISOR_ID, categories.get(position).getId());
+//                advisoeDeailsBottomDialog.setArguments(bundle);
+//                advisoeDeailsBottomDialog.show((BottomSheetDialogFragment)context).getFragmentManager(), advisoeDeailsBottomDialog.getTag());
 
             }
         });

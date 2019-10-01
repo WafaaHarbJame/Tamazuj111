@@ -20,6 +20,7 @@ import com.Tamazj.TamazjApp.Adapter.Areas_Counseling_adapter;
 import com.Tamazj.TamazjApp.Adapter.CategoriesAdapter;
 import com.Tamazj.TamazjApp.Adapter.SupCategoriesAdapter;
 import com.Tamazj.TamazjApp.Api.MyApplication;
+import com.Tamazj.TamazjApp.Model.AdvisoeDeailsBottomDialog;
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
 import com.Tamazj.TamazjApp.Model.Categories;
@@ -242,6 +243,17 @@ public class CategoriesdetailsFragment extends Fragment {
 
 
                                                     categoriesAdapter = new CategoriesAdapter(getContext(), categories);
+                                                    categoriesAdapter.setIClickListener(new CategoriesAdapter.IClickListener() {
+                                                        @Override
+                                                        public void onItemClick(int position, List<Categories> areas_counseling_models) {
+                                                            AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
+                Bundle bundle = new Bundle();
+                bundle.putString(AppConstants.ADVISOR_ID, categories.get(position).getId());
+                advisoeDeailsBottomDialog.setArguments(bundle);
+                advisoeDeailsBottomDialog.show(getFragmentManager(), advisoeDeailsBottomDialog.getTag());
+
+                                                        }
+                                                    });
                                                     categoriesrecycler.setAdapter(categoriesAdapter);
 //                                                } catch (JSONException e) {
 //                                                    e.printStackTrace();

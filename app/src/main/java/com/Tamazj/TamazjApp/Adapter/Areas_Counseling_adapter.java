@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.Tamazj.TamazjApp.Fragments.CategoriesdetailsFragment;
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
+import com.Tamazj.TamazjApp.Model.Categories;
 import com.Tamazj.TamazjApp.R;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,7 @@ public class Areas_Counseling_adapter extends RecyclerView.Adapter<Areas_Counsel
     int pos;
 
     interface IClickListener{
-        void onItemClick(int position, List<Areas_Counseling_Model> areas_counseling_models, View enable);
+        void onItemClick(int position, List<Categories> areas_counseling_models, View enable);
     }
 
     IClickListener iClickListener;
