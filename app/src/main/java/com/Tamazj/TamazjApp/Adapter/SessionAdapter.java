@@ -75,7 +75,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MyHolder
             @Override
             public void onClick(View v) {
                 final Intent intent = new Intent(context, BillActivity.class);
-                intent.putExtra(AppConstants.SESSION_TYPE, sessionlist.get(position).getId());
+                intent.putExtra(AppConstants.SESSION_TYPE, sessionlist.get(position).getId()+"");
+                //Toast.makeText(context, ""+sessionlist.get(position).getId(), Toast.LENGTH_SHORT).show();
                 intent.putExtra(AppConstants.CONSULT_TYPE, category);
                 intent.putExtra(AppConstants.CATEGORY_ID, categoryId);
                 intent.putExtra(AppConstants.Sub_CATEGORY_ID, subCategoryId);
