@@ -16,12 +16,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Tamazj.TamazjApp.Adapter.Areas_Counseling_adapter;
 import com.Tamazj.TamazjApp.Adapter.CategoriesAdapter;
-import com.Tamazj.TamazjApp.Adapter.SupCategoriesAdapter;
 import com.Tamazj.TamazjApp.Api.MyApplication;
 import com.Tamazj.TamazjApp.Model.AppConstants;
-import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
 import com.Tamazj.TamazjApp.Model.Categories;
 import com.Tamazj.TamazjApp.Model.FilterBottomDialog;
 import com.Tamazj.TamazjApp.R;
@@ -46,14 +43,12 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoriesdetailsFragment extends Fragment {
+public class SubCategoriesDetailsFragment extends Fragment {
     View view;
     private RecyclerView  categoriesrecycler;
     LinearLayoutManager linearLayout ;
     List<Categories> categories=new ArrayList<>();
     CategoriesAdapter categoriesAdapter;
-    List<Areas_Counseling_Model> subCategories =new ArrayList<>();
-    SupCategoriesAdapter subCategoriesAdapter;
     ImageView blueBack;
     ImageView filter;
     ImageView astesharticontoolbar;
@@ -64,7 +59,7 @@ public class CategoriesdetailsFragment extends Fragment {
 
 
 
-    public  CategoriesdetailsFragment() {
+    public SubCategoriesDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -119,7 +114,7 @@ public class CategoriesdetailsFragment extends Fragment {
         if( bundle != null && bundle.getString(AppConstants.CATEGORY_ID)!= null){
            ID = bundle.getString(AppConstants.CATEGORY_ID);
             //Toast.makeText(getContext(), ""+ADVISOR_ID, Toast.LENGTH_SHORT).show();
-            fillList(ID);
+            fillListSubCategory(ID);
         } else {
             Toast.makeText(getContext(), ""+getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
         }
@@ -133,7 +128,8 @@ public class CategoriesdetailsFragment extends Fragment {
 //        categories.add(new Categories(getResources().getString(R.string._84_percent_of)," https://www.mediafire.com/view/yyfa6yue2aaqkhs/asteshartosari.png/file ",getResources().getString(R.string.abu_dall_mohammed_omar),getResources().getString(R.string.educational_consultant_holding_an_international_certificate_in_education),getResources().getString(R.string.consultType)));
 //
 
-
+        categoriesAdapter=new CategoriesAdapter(getContext(),categories);
+        categoriesrecycler.setAdapter(categoriesAdapter);
         Bundle args = getArguments();
         if (args != null) {
             String toolbartiltlestrring =getArguments().getString(AppConstants.toolbartiltle);
@@ -146,10 +142,10 @@ public class CategoriesdetailsFragment extends Fragment {
 
     //----------------------------------------------------------------------------------------------
 
-    private void fillList(String ID) {
+    private void fillListSubCategory(String ID) {
 
         showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.CATEGORY+ID, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.Sub_CATEGORY+ID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -157,104 +153,69 @@ public class CategoriesdetailsFragment extends Fragment {
                     JSONObject jsonObject = r.getJSONObject("data");
 // for(int i=0;i<jsonArray.length();i++){
                     try {
-                            //JSONObject jsonObject =  jsonArray.getJSONObject(i);
-                            String id =jsonObject.get("id").toString();
-                            String category = "";
-                            if(lang.equals("ar"))
-                                category =jsonObject.get("name_ar").toString();
-                            else category =jsonObject.get("name_en").toString();
-                            String image = jsonObject.get("image").toString();
+                        //JSONObject jsonObject =  jsonArray.getJSONObject(i);
+                        String id =jsonObject.get("id").toString();
+                        String category = "";
+                        if(lang.equals("ar"))
+                            category =jsonObject.get("name_ar").toString();
+                        else category =jsonObject.get("name_en").toString();
+                        String image = jsonObject.get("image").toString();
 
-                            JSONArray jsonArraySubCategory = jsonObject.getJSONArray("sup_category");
-                                if(jsonArraySubCategory.length()>0){
-                                    for(int j=0;j<jsonArraySubCategory.length();j++){
-                                        try {
-                                            JSONObject jsonObject2 = jsonArraySubCategory.getJSONObject(j);
-                                            String subId = jsonObject2.get("id").toString();
-                                            String subcategory;
-                                            if (lang.equals("ar"))
-                                                subcategory = jsonObject2.get("name_ar").toString();
-                                            else
-                                                subcategory = jsonObject2.get("name_en").toString();
-                                            //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
-                                            String subImage = jsonObject2.get("image").toString();
-//                                    Fragment fragment = new CategoriesdetailsFragment();
-//                                    Bundle bundle = new Bundle();
-//                                    bundle.putString(AppConstants.CATEGORY_ID, id);
-//                                    bundle.putString(AppConstants.toolbartiltle, category);
-//                                    fragment.setArguments(bundle);
-//                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
-                                            subCategories.add(new Areas_Counseling_Model(subImage, subcategory, subId));
+                        JSONArray jsonArraySubCategory = jsonObject.getJSONArray("sup_category");
 
+                        for(int j=0;j<jsonArraySubCategory.length();j++){
+                            try {
+                                JSONObject jsonObject2 =  jsonArraySubCategory.getJSONObject(j);
+                                String subId =jsonObject2.get("id").toString();
+                                String subcategory;
+                                if(lang.equals("ar"))
+                                    subcategory =jsonObject2.get("name_ar").toString();
+                                else subcategory =jsonObject2.get("name_en").toString();
+                                //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
+                                String subImage = jsonObject2.get("image").toString();
+
+                                JSONArray jsonArrayAdvisor = jsonObject2.getJSONArray("consultant");
+                                Log.e("WAFAA", jsonArrayAdvisor.toString());
+
+                                for(int k=0;k<jsonArrayAdvisor.length();k++){
+                                    try {
+                                        JSONObject jsonObjectAdvisor =  jsonArrayAdvisor.getJSONObject(k);
+                                        String AdId =jsonObjectAdvisor.get("id").toString();
+                                        //Toast.makeText(getContext(), ""+ AdId, Toast.LENGTH_SHORT).show();
+                                        String AdName =jsonObjectAdvisor.get("name").toString();
+                                        String Adcategory;
+                                        JSONArray jsonArrayCategory = jsonObjectAdvisor.getJSONArray("category");
+                                        JSONObject jsonObjectCategory = jsonArrayCategory.getJSONObject(0);
+
+                                        if (lang.equals("ar"))
+                                            Adcategory = jsonObjectCategory.get("name_ar").toString();
+                                        else
+                                            Adcategory = jsonObjectCategory.get("name_en").toString();
+                                        //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
+                                        String AdPhoto = jsonObjectAdvisor.get("photo").toString();
+                                        String rating = jsonObjectAdvisor.get("rating").toString();
+                                        String status =  jsonObjectAdvisor.get("status").toString();
+                                        if(status.equals(AppConstants.ACTIVE)){
+                                            categories.add(new Categories(rating, AdPhoto, AdName, "",  Adcategory, AdId));
                                         }
-                                            catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                        subCategoriesAdapter = new SupCategoriesAdapter(getContext(), subCategories);
-                                        categoriesrecycler.setAdapter(subCategoriesAdapter);
-                                } else {
-
-//                                            for(int j=0;j<jsonArraySubCategory.length();j++) {
-//                                                try {
-//                                                    JSONObject jsonObject2 = jsonArraySubCategory.getJSONObject(j);
-//                                                    String subId = jsonObject2.get("id").toString();
-//                                                    String subcategory;
-//                                                    if (lang.equals("ar"))
-//                                                        subcategory = jsonObject2.get("name_ar").toString();
-//                                                    else
-//                                                        subcategory = jsonObject2.get("name_en").toString();
-                                                    //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
-                                                    //String subImage = jsonObject2.get("image").toString();
-                                                    JSONArray jsonArrayAdvisor = jsonObject.getJSONArray("consultant");
-                                                    Log.e("kh", jsonArrayAdvisor.toString());
-
-                                                    for (int k = 0; k < jsonArrayAdvisor.length(); k++) {
-                                                        try {
-                                                            JSONObject jsonObjectAdvisor = jsonArrayAdvisor.getJSONObject(k);
-                                                            Log.e("kh", jsonArrayAdvisor.toString());
-                                                            String AdId = jsonObjectAdvisor.get("id").toString();
-                                                            //Toast.makeText(getContext(), ""+ AdId, Toast.LENGTH_SHORT).show();
-                                                            String AdName = jsonObjectAdvisor.get("name").toString();
-                                                            String Adcategory;
-                                                            JSONArray jsonArrayCategory = jsonObjectAdvisor.getJSONArray("category");
-                                                            JSONObject jsonObjectCategory = jsonArrayCategory.getJSONObject(0);
-
-                                                            if (lang.equals("ar"))
-                                                                Adcategory = jsonObjectCategory.get("name_ar").toString();
-                                                            else
-                                                                Adcategory = jsonObjectCategory.get("name_en").toString();
-                                                            //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
-                                                            String AdPhoto = jsonObjectAdvisor.get("photo").toString();
-                                                            String rating = jsonObjectAdvisor.get("rating").toString();
-                                                            String status = jsonObjectAdvisor.get("status").toString();
-                                                            Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
-                                                            if (status.equals(AppConstants.ACTIVE)) {
-                                                                categories.add(new Categories(rating, AdPhoto, AdName, "", Adcategory, AdId));
-                                                                Log.e("kh", categories.toString());
-                                                            }
+                                }
 
 
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-
-
-                                                    categoriesAdapter = new CategoriesAdapter(getContext(), categories);
-                                                    categoriesrecycler.setAdapter(categoriesAdapter);
-//                                                } catch (JSONException e) {
-//                                                    e.printStackTrace();
-//                                                }
-//                                            }
-
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                            //areas_counseling_models.add(new Areas_Counseling_Model(image, category, id));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                   // }
-                    //categoriesAdapter.notifyDataSetChanged();
+                        //areas_counseling_models.add(new Areas_Counseling_Model(image, category, id));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    // }
+                    categoriesAdapter.notifyDataSetChanged();
 
 //                    for (int j = 0; j < consultants.size(); j++) {
 //                        String name = consultants.get(0).getData().get(j).getName();
@@ -265,7 +226,7 @@ public class CategoriesdetailsFragment extends Fragment {
 //                    }
                 }catch (JSONException e) {
                     e.printStackTrace();
-                   // Log.e("WAFAA", e.toString());
+                    // Log.e("WAFAA", e.toString());
                     hideDialog();
                 }
 
@@ -273,7 +234,7 @@ public class CategoriesdetailsFragment extends Fragment {
 
 
                 //}
-               // Log.e("WAFAA", response.toString());
+                // Log.e("WAFAA", response.toString());
 
 
                 hideDialog();
@@ -285,7 +246,7 @@ public class CategoriesdetailsFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 hideDialog();
                 Toast.makeText(getContext(), getString(R.string.tryAgain), Toast.LENGTH_SHORT).show();
-               // Log.e("WAFAA", error.toString());
+                // Log.e("WAFAA", error.toString());
             }
         }) {
             @Override
