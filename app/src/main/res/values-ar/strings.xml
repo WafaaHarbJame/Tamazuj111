@@ -6,7 +6,7 @@
     <string name="title_dashboard">الرئيسية</string>
     <string name="signIn">سجيل الدخول</string>
     <string name="emailHint">email@email.email</string>
-    <string name="passwordHint">*************</string>
+    <string name="passwordHint">كلمة المرور</string>
     <string name="forgetPassword">نسيت كلمة المرور</string>
     <string name="sign">دخول</string>
     <string name="dontHaveAccount">ليس لديك حساب ؟</string>

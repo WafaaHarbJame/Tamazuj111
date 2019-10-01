@@ -5,7 +5,7 @@
     <string name="title_notifications">Notifications</string>
     <string name="signIn">Sign In</string>
     <string name="emailHint">email@email.email</string>
-    <string name="passwordHint">*************</string>
+    <string name="passwordHint">Passward</string>
     <string name="forgetPassword">Forget password</string>
     <string name="sign">Sign</string>
     <string name="dontHaveAccount">Don`t have account?</string>
