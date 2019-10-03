@@ -172,5 +172,6 @@
     <string name="means_of_communication">طريقة التواصل</string>
     <string name="summary_problem">ملخص المشكلة</string>
     <string name="myConsultDETAILS">تفاصيل الاستشارة</string>
+    <string name="select_countrycode">اختر كود الدولة</string>
 
 </resources>

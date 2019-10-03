@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.hbb20.CountryCodePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +42,9 @@ public class ResetPassActivity extends AppCompatActivity {
     SharedPreferences.Editor editor_signUp;
     String choosing_langauge;
     ImageView back;
-
+    String CountryCode;
+    boolean select_country = false;
+    private CountryCodePicker ccp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,22 @@ public class ResetPassActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
         back = findViewById(R.id.advisor_back);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        ccp.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                select_country = true;
+                return false;
+            }
+        });
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                select_country = true;
+                CountryCode = ccp.getSelectedCountryCodeWithPlus();
+            }
+        });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +88,9 @@ public class ResetPassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(mEditPhone.getText().equals(null) || mEditPhone.getText().equals("")){
                     Toast.makeText(ResetPassActivity.this, ""+getString(R.string.phoneRequired), Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else if (!select_country) {
+                    Toast.makeText(ResetPassActivity.this, "" + getString(R.string.select_countrycode), Toast.LENGTH_SHORT).show();
+                } else{
 
                     ConnectivityManager conMgr = (ConnectivityManager) ResetPassActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
@@ -79,18 +99,15 @@ public class ResetPassActivity extends AppCompatActivity {
                         if (sharedPreferences != null) {
                             if (sharedPreferences.getString(AppConstants.LANG_choose, null) != null) {
                                 choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
-                                resetPass(mEditPhone.getText().toString(),choosing_langauge);
+                                resetPass(CountryCode + mEditPhone.getText().toString(), choosing_langauge);
 
                             }
                         }
 
 
-
-                    }
-                    else {
+                    } else {
                         Toast.makeText(ResetPassActivity.this, ""+getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
                     }
-
 
 
                 }

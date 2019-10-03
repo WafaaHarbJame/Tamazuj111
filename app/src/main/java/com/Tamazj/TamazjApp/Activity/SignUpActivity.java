@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.hbb20.CountryCodePicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +41,9 @@ public class SignUpActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor_signUp;
-
+    String CountryCode;
+    boolean select_country = false;
+    private CountryCodePicker ccp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,22 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.etSignUpPassword);
         confirmPassword = findViewById(R.id.etSignUpConfirmPassword);
         phone = findViewById(R.id.etSignUpPhone);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        ccp.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                select_country = true;
+                return false;
+            }
+        });
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected() {
+                select_country = true;
+                CountryCode = ccp.getSelectedCountryCodeWithPlus();
+            }
+        });
         sign = findViewById(R.id.buttonSignUpSign);
         clickHere = findViewById(R.id.buttonSignUpClickHere);
         progressDialog = new ProgressDialog(SignUpActivity.this);
@@ -76,13 +95,15 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this, ""+getString(R.string.confirmPasswordNotMatchesPassword), Toast.LENGTH_SHORT).show();
         } else if(phone.getText().equals(null) || phone.getText().equals("")){
             Toast.makeText(SignUpActivity.this, ""+getString(R.string.phoneRequired), Toast.LENGTH_SHORT).show();
+        } else if (!select_country) {
+            Toast.makeText(SignUpActivity.this, "" + getString(R.string.select_countrycode), Toast.LENGTH_SHORT).show();
         } else {
             ConnectivityManager conMgr = (ConnectivityManager) SignUpActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conMgr.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.isConnected()) {
-                register(AppConstants.USER_REGISTER,fullName.getText().toString(),email.getText().toString()
-                        ,phone.getText().toString(),password.getText().toString());
+                //  Toast.makeText(SignUpActivity.this, ""+CountryCode+phone.getText().toString(), Toast.LENGTH_SHORT).show();
+                register(AppConstants.USER_REGISTER,fullName.getText().toString(),email.getText().toString(), CountryCode + phone.getText().toString(), password.getText().toString());
 
             }
             else {

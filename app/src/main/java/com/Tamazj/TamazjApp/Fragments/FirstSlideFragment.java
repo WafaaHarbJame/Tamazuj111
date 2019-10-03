@@ -159,6 +159,9 @@ public class FirstSlideFragment extends Fragment {
                     }
                             Picasso.with(getContext()).load(photo).into(profileimage);
                             profile_name.setText(name);
+                    if (biography.matches("") || biography.equals(null)) {
+                        biography = "";
+                    }
                     profile_dsc.setText(biography);
                             percent.setText(rating+"%");
 //                            Toast.makeText(getContext(), ""+rating, Toast.LENGTH_SHORT).show();

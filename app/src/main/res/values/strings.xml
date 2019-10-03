@@ -171,5 +171,6 @@
     <string name="means_of_communication">type of communication</string>
     <string name="summary_problem">summary_problem</string>
     <string name="myConsultDETAILS">My Consults Details</string>
+    <string name="select_countrycode">choose country Code!</string>
 
 </resources>
