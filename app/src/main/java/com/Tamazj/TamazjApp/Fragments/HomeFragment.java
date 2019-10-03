@@ -99,6 +99,8 @@ public class HomeFragment extends Fragment {
         handler.postDelayed(runnable, 1000);
         runnable.run();
         viewPager = view.findViewById(R.id.view_pager_slider);
+        progressDialog = new ProgressDialog(getContext());
+
         CustomViewPagerAdapter viewPagerAdapter = new CustomViewPagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         // now it's time to think about our sliders
@@ -329,7 +331,7 @@ public class HomeFragment extends Fragment {
 
     private void getcategory(final String lang, final String token) {
 
-        //showDialog();
+        // showDialog();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.HOME, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -347,15 +349,16 @@ public class HomeFragment extends Fragment {
                             String image = jsonObject.get("image").toString();
 
                             areas_counseling_models.add(new Areas_Counseling_Model(image, category, id));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                         }
                     }
                     areas_counseling_adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Log.e("WAFAA", e.toString());
-                    hideDialog();
                 }
 
                 Log.e("WAFAA", response.toString());
