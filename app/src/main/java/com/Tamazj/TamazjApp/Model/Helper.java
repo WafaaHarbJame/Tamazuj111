@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by a_man on 5/5/2017.
  */
@@ -90,4 +93,16 @@ public class Helper {
         Arrays.sort(temp);
         return temp[0] + "-" + temp[1];
     }
+
+    public Helper(Context context) {
+        //sharedPreferenceHelper = new SharedPreferenceHelper(context);
+        gson = new Gson();
+    }
+
+    public static Realm getRealmInstance() {
+        RealmConfiguration config = new RealmConfiguration.Builder().deleteRealmIfMigrationNeeded().build();
+        Realm realm = Realm.getInstance(config);
+        return realm;
+    }
+
 }

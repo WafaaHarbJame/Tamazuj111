@@ -1,17 +1,22 @@
 package com.Tamazj.TamazjApp.Model;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
+import io.realm.RealmModel;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by a_man on 5/4/2017.
  */
 
+@RealmClass
 public class User implements Parcelable, RealmModel {
-
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
@@ -23,15 +28,18 @@ public class User implements Parcelable, RealmModel {
             return new User[size];
         }
     };
-    private boolean online;
     @Exclude
     private String nameInPhone;
+    @Ignore
+    private boolean online;
+    @Ignore
     private boolean typing;
+    @Ignore
     @Exclude
     private boolean selected;
+    @Ignore
     @Exclude
     private boolean inviteAble;
-    private String id;
     private String name, status, image;
 
     public User() {
@@ -47,6 +55,17 @@ public class User implements Parcelable, RealmModel {
         name = in.readString();
         status = in.readString();
         image = in.readString();
+    }
+
+    @PrimaryKey
+    private String id;
+
+    public static boolean validate(User user) {
+        return user != null && user.getId() != null && user.getName() != null && user.getStatus() != null;
+    }
+
+    public boolean isSelected() {
+        return selected;
     }
 
     public User(String id, String name, String status, String image) {
@@ -69,18 +88,6 @@ public class User implements Parcelable, RealmModel {
         this.inviteAble = true;
     }
 
-    public static boolean validate(User user) {
-        return user != null && user.getId() != null && user.getName() != null && user.getStatus() != null;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,10 +102,6 @@ public class User implements Parcelable, RealmModel {
         return nameInPhone;
     }
 
-    public void setNameInPhone(String nameInPhone) {
-        this.nameInPhone = nameInPhone;
-    }
-
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
@@ -110,6 +113,14 @@ public class User implements Parcelable, RealmModel {
 
     public void setTyping(boolean typing) {
         this.typing = typing;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public void setNameInPhone(String nameInPhone) {
+        this.nameInPhone = nameInPhone;
     }
 
     public String getImage() {
@@ -132,10 +143,6 @@ public class User implements Parcelable, RealmModel {
         return online;
     }
 
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
     public String getId() {
         return id;
     }
@@ -148,16 +155,20 @@ public class User implements Parcelable, RealmModel {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getNameToDisplay() {
         return (this.nameInPhone != null) ? this.nameInPhone : this.name;
     }
 
     public boolean isInviteAble() {
         return inviteAble;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
