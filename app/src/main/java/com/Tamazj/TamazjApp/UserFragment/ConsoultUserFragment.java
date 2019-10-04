@@ -4,6 +4,7 @@ package com.Tamazj.TamazjApp.UserFragment;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -19,9 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.Tamazj.TamazjApp.Activity.SignInActivity;
 import com.Tamazj.TamazjApp.Adapter.ConsultUserAdapter;
 import com.Tamazj.TamazjApp.Api.MyApplication;
 import com.Tamazj.TamazjApp.Fragments.HomeFragment;
+import com.Tamazj.TamazjApp.MainActivity;
 import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Consults;
 import com.Tamazj.TamazjApp.R;
@@ -57,9 +60,10 @@ public class ConsoultUserFragment extends Fragment {
     String choosing_langauge;
     SharedPreferences sharedPreferences;
     ProgressDialog progressDialog;
-    String token;
+    String token, lang;
     LinearLayoutManager linearLayoutManager;
     String fcm_token;
+    ImageButton deleteConsult;
 
 
     @SuppressLint("WrongConstant")
@@ -68,6 +72,7 @@ public class ConsoultUserFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_consoult_user, container, false);
         blueBack = view.findViewById(R.id.backbutton);
+        deleteConsult = view.findViewById(R.id.deleteConsult);
 
         blueBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,10 +82,68 @@ public class ConsoultUserFragment extends Fragment {
         });
         recyclerView = view.findViewById(R.id.rvUserConsult);
         consultApplications = new ArrayList<>();
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.LANG_choose, Locale.getDefault().getLanguage()) != null){
+            lang = sharedPreferences.getString(AppConstants.LANG_choose,Locale.getDefault().getLanguage());
+        } else {
+            lang = Locale.getDefault().getLanguage();
+        }
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.token, Locale.getDefault().getLanguage()) != null){
+            token = sharedPreferences.getString(AppConstants.token,"");
+        }
+        deleteConsult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    showDialog();
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.USER_LOGIN, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject r = new JSONObject(response);
+                                int status = r.getInt("status");
+                                //  String message = register_response.getString("message");
+                                String message = r.getString("message");
+                                Toast.makeText(getContext(), ""+message, Toast.LENGTH_SHORT).show();
+                                Log.e("WAFAA", response);
 
 
-        sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
-        token = sharedPreferences.getString(AppConstants.token, "default value");
+                                hideDialog();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                hideDialog();
+
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            hideDialog();
+
+                        }
+                    }) {
+
+
+                        @Override
+                        public Map<String, String> getHeaders() {
+                            HashMap<String, String> headers = new HashMap<>();
+                            headers.put("token", token);
+                            headers.put("lang", lang);
+                            return headers;
+                        }
+                    };
+
+                    MyApplication.getInstance().addToRequestQueue(stringRequest);
+
+
+                }
+        });
+
+//        sharedPreferences = getActivity().getSharedPreferences(AppConstants.KEY_SIGN_UP, MODE_PRIVATE);
+//        token = sharedPreferences.getString(AppConstants.token, "default value");
         fcm_token = sharedPreferences.getString(AppConstants.FCM_TOKEN, "default value");
         choosing_langauge = sharedPreferences.getString(AppConstants.LANG_choose, "");
         progressDialog = new ProgressDialog(getActivity());
