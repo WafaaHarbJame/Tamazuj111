@@ -109,6 +109,12 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
                 }
             }
         });
+
+        if(consults.get(position).getStatus() != null && consults.get(position).getStatus().matches(AppConstants.CONSULT_DELETE_OK)){
+            holder.deleteConsult.setVisibility(View.VISIBLE);
+        } else{
+            holder.deleteConsult.setVisibility(View.GONE);
+        }
     }
 
     public String getURLForResource(int resourceId) {

@@ -64,7 +64,7 @@ public class ConsoultUserFragment extends Fragment {
     String token, lang;
     LinearLayoutManager linearLayoutManager;
     String fcm_token;
-    ImageButton deleteConsult;
+    //ImageButton deleteConsult;
 
 
     @SuppressLint("WrongConstant")
@@ -126,18 +126,17 @@ public class ConsoultUserFragment extends Fragment {
             public void onItemClick(int position, List<Consults.DataBean> consults) {
                 showDialog();
                 int sessionId = consults.get(position).getId();
+                //Toast.makeText(getContext(), ""+sessionId, Toast.LENGTH_SHORT).show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.DELETE_CONSULT+sessionId+AppConstants.DELETE_CONSULT_2, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
+                            Log.e("kh", response);
                             JSONObject r = new JSONObject(response);
-                            int status = r.getInt("status");
-                            //  String message = register_response.getString("message");
+                           // int status = r.getInt("status");
                             String message = r.getString("message");
                             Toast.makeText(getContext(), ""+message, Toast.LENGTH_SHORT).show();
-                            Log.e("WAFAA", response);
-
-
+                            adapter.notifyDataSetChanged();
                             hideDialog();
 
 
@@ -153,7 +152,7 @@ public class ConsoultUserFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         hideDialog();
-
+                        Log.e("kh", error.toString());
                     }
                 }) {
 
@@ -161,7 +160,7 @@ public class ConsoultUserFragment extends Fragment {
                     @Override
                     public Map<String, String> getHeaders() {
                         HashMap<String, String> headers = new HashMap<>();
-                        headers.put("token", token);
+                        headers.put("Authorization", "Bearer" + "  " + token);
                         headers.put("lang", lang);
                         return headers;
                     }
@@ -259,11 +258,6 @@ public class ConsoultUserFragment extends Fragment {
                         String arabic_catogoryname = "", english_catogoryname = "";
                         int id = jsonArray.getJSONObject(i).getInt("id");
                         String status = jsonArray.getJSONObject(i).getString("status");
-                        if(status.matches(AppConstants.CONSULT_DELETE_OK)){
-                            deleteConsult.setVisibility(View.VISIBLE);
-                        } else{
-                            deleteConsult.setVisibility(View.GONE);
-                        }
                         // Toast.makeText(getActivity(), "" + status, Toast.LENGTH_SHORT).show();
                         JSONObject session = jsonArray.getJSONObject(i).getJSONObject("session_time");
                         String time = session.getString("time");

@@ -183,6 +183,7 @@ public class CategoriesFragment extends Fragment {
                 return map;
 
             }
+
         };
 
         MyApplication.getInstance().addToRequestQueue(stringRequest);

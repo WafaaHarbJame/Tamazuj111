@@ -319,6 +319,15 @@ public class CategoriesdetailsFragment extends Fragment {
                 return map;
 
             }
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer" + "  " + token);
+                headers.put("lang", lang);
+                return headers;
+
+            }
+
         };
 
         MyApplication.getInstance().addToRequestQueue(stringRequest);
