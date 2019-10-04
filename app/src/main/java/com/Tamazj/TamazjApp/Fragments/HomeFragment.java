@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
 
     private void automateSlider() {
         isCountDownTimerActive = true;
-        new CountDownTimer(SLIDER_TIMER, 1000) {
+        new CountDownTimer(SLIDER_TIMER, 2000) {
             @Override
             public void onTick(long millisUntilFinished) {
             }

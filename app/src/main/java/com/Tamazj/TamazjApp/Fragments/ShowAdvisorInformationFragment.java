@@ -290,7 +290,7 @@ public class ShowAdvisorInformationFragment extends Fragment {
     private void fillList(String ADVISOR_ID) {
 
         showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.FEEDBACK+ADVISOR_ID, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.FEEDBACK+ADVISOR_ID+AppConstants.FEEDBACK_2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -304,8 +304,12 @@ public class ShowAdvisorInformationFragment extends Fragment {
                                 JSONObject jsonObject =  jsonArray.getJSONObject(j);
                                 String feedback =jsonObject.get("feedback").toString();
                                 String ratting = jsonObject.get("ratting").toString();
-                                //Toast.makeText(getContext(), ""+feedback, Toast.LENGTH_SHORT).show();
-                                list.add(new Review(getURLForResource(R.drawable.advisorreview),getString(R.string.FeedbackTime),getString(R.string.esaIbraheem), ratting,feedback));
+                                String name = jsonObject.get("name").toString();
+                                String photo = jsonObject.get("photo").toString();
+                                String time_rating = jsonObject.get("time_rating").toString();
+                                String time_minutes = jsonObject.get("time_minutes").toString();
+//Toast.makeText(getContext(), ""+feedback, Toast.LENGTH_SHORT).show();
+                                list.add(new Review(photo, time_rating, name, ratting, feedback));
 
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -44,29 +44,35 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyHolder> 
         if (!(reviews.isEmpty())) {
             holder.time.setText(reviews.get(position).getTime());
             holder.name.setText(reviews.get(position).getName());
-            holder.rate.setText(reviews.get(position).getRate());
+           // holder.rate.setText(reviews.get(position).getRate());
             holder.body.setText(reviews.get(position).getReviewBody());
             Picasso.with(context).load(reviews.get(position).getImgUrl()).into(holder.img);
 
             switch (reviews.get(position).getRate()){
                 case AppConstants.RATING_5 :
                     holder.feedbackIcon.setImageResource(R.drawable.love);
+                    holder.rate.setText(context.getString(R.string.happy));
+
                     break;
 
                 case AppConstants.RATING_4 :
                     holder.feedbackIcon.setImageResource(R.drawable.radi);
+                    holder.rate.setText(context.getString(R.string.satisfied));
                     break;
 
                 case AppConstants.RATING_3 :
                     holder.feedbackIcon.setImageResource(R.drawable.radi);
+                    holder.rate.setText(context.getString(R.string.satisfied));
                     break;
 
                 case AppConstants.RATING_2 :
                     holder.feedbackIcon.setImageResource(R.drawable.notradi);
+                    holder.rate.setText(context.getString(R.string.notSatisfied));
                     break;
 
                 case AppConstants.RATING_1 :
                     holder.feedbackIcon.setImageResource(R.drawable.notradi);
+                    holder.rate.setText(context.getString(R.string.notSatisfied));
                     break;
 
                 default:
