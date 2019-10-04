@@ -259,6 +259,11 @@ public class ConsoultUserFragment extends Fragment {
                         String arabic_catogoryname = "", english_catogoryname = "";
                         int id = jsonArray.getJSONObject(i).getInt("id");
                         String status = jsonArray.getJSONObject(i).getString("status");
+                        if(status.matches(AppConstants.CONSULT_DELETE_OK)){
+                            deleteConsult.setVisibility(View.VISIBLE);
+                        } else{
+                            deleteConsult.setVisibility(View.GONE);
+                        }
                         // Toast.makeText(getActivity(), "" + status, Toast.LENGTH_SHORT).show();
                         JSONObject session = jsonArray.getJSONObject(i).getJSONObject("session_time");
                         String time = session.getString("time");

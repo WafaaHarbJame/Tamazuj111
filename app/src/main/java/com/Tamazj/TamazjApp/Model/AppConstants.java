@@ -60,6 +60,7 @@ public interface AppConstants {
     String FEEDBACK_2 = "/feedback";
     String DELETE_CONSULT = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
     String DELETE_CONSULT_2 = "/cancellation";
+    String CONSULT_DELETE_OK = "الاستشارة قيد الانتظار";
 
     //----------------------------------------------------------------------------------------------
 }
