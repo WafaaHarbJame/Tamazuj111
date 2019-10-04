@@ -56,6 +56,10 @@ public interface AppConstants {
     String user_consultation = "http://salahalimohamed.website/tmajog/api/v1/user/consultation";
     String user_consultation_details = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
     String HOME = "http://salahalimohamed.website/tmajog/api/v1/user/home";
-    String FEEDBACK = "http://salahalimohamed.website/tmajog/api/v1/consultants/feedback/";
+    String FEEDBACK = "http://salahalimohamed.website/tmajog/api/v1/consultants/";
+    String FEEDBACK_2 = "/feedback";
+    String DELETE_CONSULT = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
+    String DELETE_CONSULT_2 = "/cancellation";
+
     //----------------------------------------------------------------------------------------------
 }

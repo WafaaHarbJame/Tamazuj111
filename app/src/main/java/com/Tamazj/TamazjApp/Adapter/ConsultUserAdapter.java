@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tamazj.TamazjApp.Model.AppConstants;
+import com.Tamazj.TamazjApp.Model.Categories;
 import com.Tamazj.TamazjApp.Model.Consults;
 import com.Tamazj.TamazjApp.R;
 import com.Tamazj.TamazjApp.UserFragment.ConsoultUserFragmentDetails;
@@ -32,6 +34,17 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
     private LayoutInflater inflater;
     SharedPreferences sharedPreferences;
     String lang;
+
+
+    public interface IClickListener{
+        void onItemClick(int position,List<Consults.DataBean> consults);
+    }
+
+    public void setIClickListener(IClickListener iClickListener){
+        this.iClickListener=iClickListener;
+    }
+
+    IClickListener iClickListener;
 
 
     public ConsultUserAdapter(Context context, List<Consults.DataBean> consults) {
@@ -88,6 +101,14 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
             }
         });
 
+        holder.deleteConsult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (iClickListener!=null){
+                    iClickListener.onItemClick(position,consults);
+                }
+            }
+        });
     }
 
     public String getURLForResource(int resourceId) {
@@ -99,9 +120,10 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
         return consults.size();
     }
 
-    static class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class MyHolder extends RecyclerView.ViewHolder {//implements View.OnClickListener
         TextView name, type, time, consultStatusFinished, consultStatusScheduled;
         ImageView img;
+        ImageButton deleteConsult;
         ViewGroup container;
 
         public MyHolder(View itemView) {
@@ -112,18 +134,19 @@ public class ConsultUserAdapter extends RecyclerView.Adapter<ConsultUserAdapter.
             consultStatusFinished = itemView.findViewById(R.id.tvConsultStatus);
             consultStatusScheduled = itemView.findViewById(R.id.tvConsultStatusScheduled);
             img = itemView.findViewById(R.id.consultImage);
+            deleteConsult = itemView.findViewById(R.id.deleteConsult);
             container = itemView.findViewById(R.id.cardViewConsult);
-            container.setOnClickListener(this);
+          //  container.setOnClickListener(this);
             this.setIsRecyclable(false);
         }
 
-        @Override
-        public void onClick(View v) {
-            if (v == container) {
-
-
-            }
-        }
+//        @Override
+//        public void onClick(View v) {
+//            if (v == container) {
+//
+//
+//            }
+//        }
 
     }
 

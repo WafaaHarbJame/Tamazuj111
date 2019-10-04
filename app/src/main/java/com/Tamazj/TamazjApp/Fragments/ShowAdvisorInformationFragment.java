@@ -290,7 +290,7 @@ public class ShowAdvisorInformationFragment extends Fragment {
     private void fillList(String ADVISOR_ID) {
 
         showDialog();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.FEEDBACK+ADVISOR_ID, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.FEEDBACK+ADVISOR_ID+AppConstants.FEEDBACK_2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

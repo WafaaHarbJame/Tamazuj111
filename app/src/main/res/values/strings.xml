@@ -172,5 +172,7 @@
     <string name="summary_problem">summary_problem</string>
     <string name="myConsultDETAILS">My Consults Details</string>
     <string name="select_countrycode">choose country Code!</string>
+    <string name="satisfied">Satisfied</string>
+    <string name="notSatisfied">Not satisfied</string>
 
 </resources>
