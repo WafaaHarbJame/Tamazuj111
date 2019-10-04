@@ -85,7 +85,7 @@ public class HomeFragment extends Fragment {
             if (!isCountDownTimerActive) {
                 automateSlider();
             }
-            handler.postDelayed(runnable, 1000);
+            handler.postDelayed(runnable, 2000);
             // our runnable should keep running for every 1000 milliseconds (1 seconds)
         }
     };
