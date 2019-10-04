@@ -235,7 +235,7 @@ public class CategoriesdetailsFragment extends Fragment {
                                                             }
 
 
-                                                            Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
+                                                            // Toast.makeText(getContext(), ""+status, Toast.LENGTH_SHORT).show();
                                                             if (status.equals(AppConstants.ACTIVE)) {
                                                                 categories.add(new Categories(rating, AdPhoto, AdName, biography, Adcategory, AdId, id));
                                                                 Log.e("kh", categories.toString());

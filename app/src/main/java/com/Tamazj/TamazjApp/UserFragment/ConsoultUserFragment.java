@@ -128,7 +128,7 @@ public class ConsoultUserFragment extends Fragment {
                     Log.e("WAFAAUPDATE", String.valueOf(response));
 
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        Toast.makeText(getContext(), "" + jsonArray.getJSONObject(i).getString("id"), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getContext(), "" + jsonArray.getJSONObject(i).getString("id"), Toast.LENGTH_SHORT).show();
 
 
                     }
