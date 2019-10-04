@@ -8,6 +8,8 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
+        multiDexEnabled true
+
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,8 +55,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-iid:20.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'android.arch.work:work-runtime:1.0.1'
+    implementation 'com.google.firebase:firebase-database:19.1.0'
+
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.hbb20:ccp:2.3.2'
+
+
 
 
 
