@@ -215,7 +215,6 @@ public class SignInActivity extends AppCompatActivity {
                         editor_signUp.putString(AppConstants.PASSWORD, password.toString());
                         editor_signUp.putString(AppConstants.token, token);
                         editor_signUp.putBoolean(AppConstants.ISLOGIN, true);
-
                         editor_signUp.apply();
                         editor_signUp.commit();
                         Intent main = new Intent(SignInActivity.this, MainActivity.class);
