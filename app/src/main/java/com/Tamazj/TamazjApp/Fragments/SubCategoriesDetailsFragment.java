@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,6 +87,8 @@ public class SubCategoriesDetailsFragment extends Fragment {
         toolbartiltle=view.findViewById(R.id.toolbartiltle);
         astesharticontoolbar=view.findViewById(R.id.astesharticontoolbar);
 
+        Toast.makeText(getContext(), "sub", Toast.LENGTH_SHORT).show();
+
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,8 +159,7 @@ public class SubCategoriesDetailsFragment extends Fragment {
 
     //----------------------------------------------------------------------------------------------
 
-    private void fillListSubCategory(String ID) {
-
+    private void fillListSubCategory(final String ID) {
         showDialog();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, AppConstants.Sub_CATEGORY+ID, new Response.Listener<String>() {
             @Override
@@ -165,58 +167,78 @@ public class SubCategoriesDetailsFragment extends Fragment {
                 try {
                     JSONObject r = new JSONObject(response);
                     JSONObject jsonObject = r.getJSONObject("data");
+
 // for(int i=0;i<jsonArray.length();i++){
                     try {
                         //JSONObject jsonObject =  jsonArray.getJSONObject(i);
-                        String id =jsonObject.get("id").toString();
-                        String category = "";
+                        String subId =jsonObject.get("id").toString();
+                        String subcategory = "";
                         if(lang.equals("ar"))
-                            category =jsonObject.get("name_ar").toString();
-                        else category =jsonObject.get("name_en").toString();
-                        String image = jsonObject.get("image").toString();
+                            subcategory =jsonObject.get("name_ar").toString();
+                        else subcategory =jsonObject.get("name_en").toString();
+                        String subImage = jsonObject.get("image").toString();
 
-                        JSONArray jsonArraySubCategory = jsonObject.getJSONArray("sup_category");
+//                        JSONArray jsonArraySubCategory = jsonObject.getJSONArray("category");
+//
+//                        for(int j=0;j<jsonArraySubCategory.length();j++){
+//                            try {
+//                                JSONObject jsonObject2 =  jsonArraySubCategory.getJSONObject(j);
+//                                String id =jsonObject2.get("id").toString();
+//                                String category;
+//                                if(lang.equals("ar"))
+//                                    category =jsonObject2.get("name_ar").toString();
+//                                else category =jsonObject2.get("name_en").toString();
+//                                //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
+//                                String image = jsonObject2.get("image").toString();
+//
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
 
-                        for(int j=0;j<jsonArraySubCategory.length();j++){
+                        JSONArray jsonArrayAdvisor = jsonObject.getJSONArray("consultant");
+
+                        for(int k=0;k<jsonArrayAdvisor.length();k++){
                             try {
-                                JSONObject jsonObject2 =  jsonArraySubCategory.getJSONObject(j);
-                                String subId =jsonObject2.get("id").toString();
-                                String subcategory;
-                                if(lang.equals("ar"))
-                                    subcategory =jsonObject2.get("name_ar").toString();
-                                else subcategory =jsonObject2.get("name_en").toString();
-                                //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
-                                String subImage = jsonObject2.get("image").toString();
+                                JSONObject jsonObjectAdvisor =  jsonArrayAdvisor.getJSONObject(k);
+                                String AdId =jsonObjectAdvisor.get("id").toString();
+                                //Toast.makeText(getContext(), ""+ AdId, Toast.LENGTH_SHORT).show();
+                                String AdName =jsonObjectAdvisor.get("name").toString();
+                                String Adcategory;
+                                JSONArray jsonArrayCategory = jsonObjectAdvisor.getJSONArray("category");
+                                JSONObject jsonObjectCategory = jsonArrayCategory.getJSONObject(0);
 
-                                JSONArray jsonArrayAdvisor = jsonObject2.getJSONArray("consultant");
-                                Log.e("WAFAA", jsonArrayAdvisor.toString());
+                                if (lang.equals("ar"))
+                                    Adcategory = jsonObjectCategory.get("name_ar").toString();
+                                else
+                                    Adcategory = jsonObjectCategory.get("name_en").toString();
+                                //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
+                                String AdPhoto = jsonObjectAdvisor.get("photo").toString();
+                                String rating = jsonObjectAdvisor.get("rating").toString()+"%";
+                                String status =  jsonObjectAdvisor.get("status").toString();
+                                Log.e("KH.J", jsonObjectAdvisor.toString());
+                                //Toast.makeText(getContext(), "sub"+ ID, Toast.LENGTH_SHORT).show();
 
-                                for(int k=0;k<jsonArrayAdvisor.length();k++){
-                                    try {
-                                        JSONObject jsonObjectAdvisor =  jsonArrayAdvisor.getJSONObject(k);
-                                        String AdId =jsonObjectAdvisor.get("id").toString();
-                                        //Toast.makeText(getContext(), ""+ AdId, Toast.LENGTH_SHORT).show();
-                                        String AdName =jsonObjectAdvisor.get("name").toString();
-                                        String Adcategory;
-                                        JSONArray jsonArrayCategory = jsonObjectAdvisor.getJSONArray("category");
-                                        JSONObject jsonObjectCategory = jsonArrayCategory.getJSONObject(0);
+                                if(status.equals(AppConstants.ACTIVE)){
 
-                                        if (lang.equals("ar"))
-                                            Adcategory = jsonObjectCategory.get("name_ar").toString();
-                                        else
-                                            Adcategory = jsonObjectCategory.get("name_en").toString();
-                                        //Toast.makeText(getContext(), ""+ category, Toast.LENGTH_SHORT).show();
-                                        String AdPhoto = jsonObjectAdvisor.get("photo").toString();
-                                        String rating = jsonObjectAdvisor.get("rating").toString()+"%";
-                                        String status =  jsonObjectAdvisor.get("status").toString();
-                                        if(status.equals(AppConstants.ACTIVE)){
+                                    jsonArrayCategory = jsonObjectAdvisor.getJSONArray("category");
+                                    for(int j=0;j<jsonArrayCategory.length();j++){
+                                        try {
+                                            JSONObject jsonObject2 =  jsonArrayCategory.getJSONObject(j);
+                                            String id =jsonObject2.get("id").toString();
+                                            String category;
+                                            if(lang.equals("ar"))
+                                                category =jsonObject2.get("name_ar").toString();
+                                            else category =jsonObject2.get("name_en").toString();
+                                            //Toast.makeText(getContext(), ""+ subcategory, Toast.LENGTH_SHORT).show();
+                                            String image = jsonObject2.get("image").toString();
                                             categories.add(new Categories(rating, AdPhoto, AdName, "",  Adcategory, AdId, id));
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
                                     }
+
                                 }
 
 
