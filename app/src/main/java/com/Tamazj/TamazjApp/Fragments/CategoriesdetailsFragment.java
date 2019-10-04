@@ -58,7 +58,7 @@ public class CategoriesdetailsFragment extends Fragment {
     ImageView filter;
     ImageView astesharticontoolbar;
     TextView toolbartiltle;
-    String lang;
+    String lang, token;
     String ID;
 
 
@@ -78,6 +78,10 @@ public class CategoriesdetailsFragment extends Fragment {
             lang = sharedPreferences.getString(AppConstants.LANG_choose,Locale.getDefault().getLanguage());
         } else {
             lang = Locale.getDefault().getLanguage();
+        }
+
+        if(sharedPreferences != null && sharedPreferences.getString(AppConstants.token, Locale.getDefault().getLanguage()) != null){
+            token = sharedPreferences.getString(AppConstants.token,Locale.getDefault().getLanguage());
         }
 
         // Inflate the layout for this fragment

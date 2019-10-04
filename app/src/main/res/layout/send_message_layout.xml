@@ -48,16 +48,16 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
                 android:text="@string/time"
-                app:layout_constraintStart_toEndOf="@+id/ivMessageState"
+                app:layout_constraintStart_toEndOf="@+id/ivMessageS"
                 app:layout_constraintTop_toBottomOf="@+id/tvMessage"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="@dimen/activity_vertical_margin_medium" />
 
             <ImageView
-                android:id="@+id/ivMessageState"
+                android:id="@+id/ivMessageS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chat"
+                app:srcCompat="@drawable/chat"
                 android:layout_marginStart="@dimen/activity_vertical_margin_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -27,11 +27,15 @@ public class CategoriesAdapterwithouttype extends RecyclerView.Adapter<Categorie
     private LayoutInflater inflater;
     int pos;
 
-    interface IClickListener{
-        void onItemClick(int position, List<Areas_Counseling_Model> areas_counseling_models, View enable);
+    public interface IClickListener{
+        void onItemClick(int position, List<Categories> categories);
     }
 
-    Areas_Counseling_adapter.IClickListener iClickListener;
+    public void setIClickListener(IClickListener iClickListener){
+        this.IClickListener=iClickListener;
+    }
+
+   IClickListener IClickListener;
 
     public CategoriesAdapterwithouttype(Context context, List<Categories> categories){
         this.categories = categories;
@@ -70,6 +74,20 @@ public class CategoriesAdapterwithouttype extends RecyclerView.Adapter<Categorie
             }
         });
 
+        holder.askasteschar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (IClickListener!=null){
+                    IClickListener.onItemClick(position, categories);
+                }
+//                AdvisoeDeailsBottomDialog advisoeDeailsBottomDialog = new AdvisoeDeailsBottomDialog();
+//                Bundle bundle = new Bundle();
+//                bundle.putString(AppConstants.ADVISOR_ID, categories.get(position).getId());
+//                advisoeDeailsBottomDialog.setArguments(bundle);
+//                advisoeDeailsBottomDialog.show((BottomSheetDialogFragment)context).getFragmentManager(), advisoeDeailsBottomDialog.getTag());
+
+            }
+        });
 
     }
 
@@ -81,7 +99,7 @@ public class CategoriesAdapterwithouttype extends RecyclerView.Adapter<Categorie
 
     class MyHolder extends RecyclerView.ViewHolder  {
 
-        ImageView profileimage;
+        ImageView profileimage, askasteschar;
         TextView percent;
         TextView profile_name;
         TextView profile_dsc;
@@ -90,6 +108,7 @@ public class CategoriesAdapterwithouttype extends RecyclerView.Adapter<Categorie
 
         public MyHolder(View itemView) {
             super(itemView);
+            askasteschar = itemView.findViewById(R.id.askasteschar);
             percent = itemView.findViewById(R.id.percent);
             profileimage = itemView.findViewById(R.id.profileimage);
             profile_name = itemView.findViewById(R.id.profile_name);

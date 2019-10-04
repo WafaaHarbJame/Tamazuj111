@@ -107,7 +107,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
             super(itemView);
             messageBody = itemView.findViewById(R.id.tvMessage);
             time = itemView.findViewById(R.id.tvMessageTime);
-            seen = itemView.findViewById(R.id.ivMessageState);
+            seen = itemView.findViewById(R.id.ivMessageS);
             container = itemView.findViewById(R.id.cardViewSendMessage);
             container.setOnClickListener(this);
             this.setIsRecyclable(false);
@@ -118,9 +118,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             messageBody.setText(messages.get(position).getMessageBody());
             time.setText(messages.get(position).getTime());
             if(messages.get(position).isSeen()){
-                Picasso.with(context).load(getURLForResource(R.drawable.cireclenotification)).into(seen);
+                Picasso.with(context).load(getURLForResource(R.drawable.chat)).into(seen);
             } else {
-                Picasso.with(context).load(getURLForResource(R.drawable.oldcireclenotification)).into(seen);
+                Picasso.with(context).load(getURLForResource(R.drawable.chat)).into(seen);
             }
         }
     }

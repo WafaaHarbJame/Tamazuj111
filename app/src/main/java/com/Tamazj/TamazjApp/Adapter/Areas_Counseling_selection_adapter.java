@@ -1,6 +1,7 @@
 package com.Tamazj.TamazjApp.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Tamazj.TamazjApp.AdvisorFragments.AdvisorSelectionFragment;
+import com.Tamazj.TamazjApp.Model.AppConstants;
 import com.Tamazj.TamazjApp.Model.Areas_Counseling_Model;
 import com.Tamazj.TamazjApp.R;
 import com.squareup.picasso.Picasso;
@@ -61,8 +64,11 @@ public class Areas_Counseling_selection_adapter extends RecyclerView.Adapter<Are
     @Override
     public void onClick(View v) {
 
-        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, new AdvisorSelectionFragment(), "HomeFragment").commit();
-
+        Fragment fragment =  new AdvisorSelectionFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(AppConstants.CATEGORY_ID, areas_counseling_models.get(position).getId());
+        fragment.setArguments(bundle);
+        ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer, fragment, "HomeFragment").commit();
 
 
     }
