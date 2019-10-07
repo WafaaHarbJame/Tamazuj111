@@ -61,6 +61,8 @@ public interface AppConstants {
     String DELETE_CONSULT = "http://salahalimohamed.website/tmajog/api/v1/user/consultation/";
     String DELETE_CONSULT_2 = "/cancellation";
     String CONSULT_DELETE_OK = "الاستشارة قيد الانتظار";
+    String USER_PHONE = "USER_PHONE";
+    String USER_NAME = "USER_NAME";
 
     //----------------------------------------------------------------------------------------------
 }

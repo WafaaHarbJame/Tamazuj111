@@ -47,4 +47,6 @@ public class SessionActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+
 }

@@ -43,6 +43,7 @@
         android:layout_below="@+id/area_counseling_name"
         android:text=""
         android:textColor="@color/colorBlue"
+        android:gravity="center"
         android:textStyle="bold" />
 
 

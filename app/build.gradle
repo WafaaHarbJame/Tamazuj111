@@ -1,12 +1,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
+repositories {
+    google()
+    flatDir {
+        dirs 'libs'
+    }
+    maven { url "https://jitpack.io" }
 
+    google()
+    jcenter()
+}
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.Tamazj.TamazjApp"
+
+
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -48,6 +59,11 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.jrvansuita:PickImage:2.2.4'
+    implementation 'com.google.firebase:firebase-ads:18.2.0'
+    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
     implementation 'id.zelory:compressor:2.1.0'
     implementation 'com.vikktorn.picker:picker:1.0.0'
@@ -61,10 +77,41 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.hbb20:ccp:2.3.2'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.1'
+    implementation 'com.kbeanie:multipicker:1.5@aar'
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+    implementation 'com.vanniktech:emoji-google:0.5.1'
+    implementation 'com.mxn.soul:flowingdrawer-core:2.0.0'
+    implementation 'com.nineoldandroids:library:2.4.0'
+
+    implementation 'com.android.support:customtabs:28.1.1'
+
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
 
 
+    implementation('com.crashlytics.sdk.android:crashlytics:2.10.1@aar') {
+        transitive = true;
+    }
+    implementation 'com.android.support:exifinterface:28.0.0'
 
 
+    implementation(name: 'sinch-android-rtc', version: '+', ext: 'aar')
+    implementation 'com.google.firebase:firebase-storage:19.1.0'
+
+    implementation('com.googlecode.ez-vcard:ez-vcard:0.10.4') {
+        exclude group: 'org.freemarker'
+    }
 
 
 

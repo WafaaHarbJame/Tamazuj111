@@ -19,6 +19,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         anInstance = this;
+        String admobAppId = "ca-app-pub-5439869944421168~4174567044";
+
+
     }
 
     public void addToRequestQueue(Request request){

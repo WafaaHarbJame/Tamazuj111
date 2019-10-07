@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,6 +14,19 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:name=".Api.MyApplication"
@@ -52,6 +66,18 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="com.verbosetech.yoohoo.utils.MyFileProvider"
+            android:authorities="authority"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
@@ -86,6 +112,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5439869944421168~4174567044" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"
@@ -94,6 +123,76 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.MainChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.SignInActivity"
+            android:parentActivityName="com.verbosetech.yoohoo.activities.MainChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.verbosetech.yoohoo.activities.MainChatActivity" />
+        </activity>
+        <activity android:name="com.verbosetech.yoohoo.activities.ImageViewerActivity" />
+
+        <service
+            android:name="com.verbosetech.yoohoo.services.FirebaseChatService"
+            android:enabled="true" />
+        <service android:name="com.verbosetech.yoohoo.services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+
+        <receiver
+            android:name="com.verbosetech.yoohoo.receivers.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- https://fabric.io/kits/android/crashlytics/install -->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="1c0bc3be81312b1f2c2a5cf4c7637840a6f0e640" />
+
+        <!-- https://developers.google.com/places/android-sdk/signup -->
+
+
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.ContactViewerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.ChatDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.ChatActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.CallScreenActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.verbosetech.yoohoo.activities.IncomingCallScreenActivity"
+            android:screenOrientation="portrait" />
+
+
+        <service
+            android:name="com.verbosetech.yoohoo.services.FetchMyUsersService"
+            android:exported="false" />
+        <service
+            android:name="com.verbosetech.yoohoo.services.SinchService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
